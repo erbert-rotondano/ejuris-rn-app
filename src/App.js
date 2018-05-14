@@ -1,14 +1,10 @@
-import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import React from 'react';
+import { Navigation } from './config/routes';
+import { Provider } from 'react-redux';
+import store from './config/store';
 
-class App extends Component {
-  render(){
-    return(
-        <View>
-        	<Text>Teste</Text>
-       	</View>
-    );
-  }
-}
-
-export default App;
+export default () => (
+  <Provider store={store} >
+    	<Navigation/>
+  </Provider>
+);
