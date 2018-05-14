@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 
 class Home extends Component {
   render(){
     return(
         <View>
-        	<Text>Teste</Text>
+        <TouchableOpacity onPress={ () => this.props.navigation.navigate('TestScreen') }>
+        	<Text>Teste, olar</Text>
+        </TouchableOpacity>
        	</View>
     );
   }

@@ -1,65 +1,51 @@
-import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import React, { Component } from 'react'
+import {TouchableOpacity} from 'react-native';
 import { Icon } from 'react-native-elements';
-import { StackNavigator, DrawerNavigator, NavigationActions } from 'react-navigation';
-import Home from '../screens/Home';
+import Home from '../screens/Home'
+import TestScreen from '../screens/TestScreen'
 
+import { StackNavigator } from 'react-navigation'
 
+// const back = (navigation) => {
+//   return(
+//     <TouchableOpacity onPress={() => navigation.dispatch(NavigationActions.back())} >
+//       <Icon
+//         name='arrow-back'
+//         // type='entypo'
+//         iconStyle={{ fontSize: 24, color: '#FFFFFF' }}
+//         containerStyle={{ paddingLeft: 16, paddingRight: 4 }}
+//       />
+//     </TouchableOpacity>
+//   );
+// }
 
-const back = (navigation) => {
-  return(
-    <TouchableOpacity onPress={() => navigation.dispatch(NavigationActions.back())} >
-      <Icon
-        name='arrow-back'
-        //type='entypo'
-        iconStyle={{ fontSize: 24, color: '#FFFFFF' }}
-        containerStyle={{ paddingLeft: 16, paddingRight: 4 }}
-      />
-    </TouchableOpacity>
-  );
-}
-
-
-
-// Auth routes
-// export const AuthStack = StackNavigator({
-//   Login: {
-//     screen: Login,
-//     navigationOptions: ({
-//       gesturesEnabled: false,
-//     })
-//   },
-//   Signup: {
-//     screen: Signup,
-//     navigationOptions: ({
-//       gesturesEnabled: false,
-//     })
-//   }
-// },{
-//   initialRouteName: 'Login',
-//   headerMode: 'none',
-// });
-
-// Home routes
-export const HomeStack = StackNavigator({
-  Home: {
-    screen: Home,
-    navigationOptions: ({ navigation }) => ({
-      title: 'Destaques',
-      headerStyle: {
-        backgroundColor: 'rgba(242,105,53,.95)',
-      },
-      headerTintColor: '#fff',
-      gesturesEnabled: false,
-      backBehavior: 'none'
+export const Navigator = new StackNavigator({
+  Home: { 
+  	screen: Home,
+  	navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'Home',
+      title: 'eJuris',
+      // headerLeft: back(navigation)
     })
-  }
-});
-
-
-export const Navigation = StackNavigator({
-  HomeStack: {screen: Home}
+  },
+  TestScreen: { 
+  	screen: TestScreen ,
+  	navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'TestScreen',
+      title: 'Segunda Tela',
+      // headerLeft: back(navigation)
+    })
+  },
 },{
-  headerMode: 'none',
-  title: 'Main',
+  initialRouteName: 'Home',
 })
+
+class Nav extends Component {
+  render() {
+    return (
+      <Navigator />
+    )
+  }
+}
+      
+export default Nav;
