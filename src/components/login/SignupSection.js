@@ -13,7 +13,7 @@ export default class SignupSection extends Component {
       <View style={styles.container}>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={ () => this.props.navigation.navigate('Signup')}
+          onPress={ () => this.props.navigation.navigate('Home')}
         >
           <Text style={styles.text}>Criar uma conta.</Text>
         </TouchableOpacity>

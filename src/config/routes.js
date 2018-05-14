@@ -3,6 +3,7 @@ import {TouchableOpacity} from 'react-native';
 import { Icon } from 'react-native-elements';
 import Home from '../screens/Home'
 import TestScreen from '../screens/TestScreen'
+import Login from '../screens/Login'
 
 import { StackNavigator } from 'react-navigation'
 
@@ -36,8 +37,16 @@ export const Navigator = new StackNavigator({
       // headerLeft: back(navigation)
     })
   },
+  Login: { 
+  	screen: Login ,
+  	navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'Login',
+      title: 'Login',
+      // headerLeft: back(navigation)
+    })
+  },
 },{
-  initialRouteName: 'Home',
+  initialRouteName: 'Login',
 })
 
 class Nav extends Component {
