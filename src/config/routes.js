@@ -26,7 +26,7 @@ export const Navigator = new StackNavigator({
   	screen: Home,
   	navigationOptions: ({ navigation }) => ({
       drawerLabel: 'Home',
-      title: 'eJuris',
+      title: 'Balcão Virtual',
       headerStyle: {
         backgroundColor: 'rgba(54,57,62,1)',
       },
