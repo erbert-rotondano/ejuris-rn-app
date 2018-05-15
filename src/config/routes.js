@@ -4,6 +4,7 @@ import { Icon } from 'react-native-elements';
 import Home from '../screens/Home'
 import TestScreen from '../screens/TestScreen'
 import Login from '../screens/Login'
+import ProcessDetail from '../screens/ProcessDetail'
 
 import { StackNavigator } from 'react-navigation'
 
@@ -26,6 +27,10 @@ export const Navigator = new StackNavigator({
   	navigationOptions: ({ navigation }) => ({
       drawerLabel: 'Home',
       title: 'eJuris',
+      headerStyle: {
+        backgroundColor: 'rgba(54,57,62,1)',
+      },
+      headerTintColor: '#fff',
       // headerLeft: back(navigation)
     })
   },
@@ -34,6 +39,10 @@ export const Navigator = new StackNavigator({
   	navigationOptions: ({ navigation }) => ({
       drawerLabel: 'TestScreen',
       title: 'Segunda Tela',
+      headerStyle: {
+        backgroundColor: 'rgba(54,57,62,1)',
+      },
+      headerTintColor: '#fff',
       // headerLeft: back(navigation)
     })
   },
@@ -42,6 +51,22 @@ export const Navigator = new StackNavigator({
   	navigationOptions: ({ navigation }) => ({
       drawerLabel: 'Login',
       title: 'Login',
+      headerStyle: {
+        backgroundColor: 'rgba(54,57,62,1)',
+      },
+      headerTintColor: '#fff',
+      // headerLeft: back(navigation)
+    })
+  },
+  ProcessDetail: { 
+  	screen: ProcessDetail ,
+  	navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'ProcessDetail',
+      title: 'Detalhes do Processo',
+      headerStyle: {
+        backgroundColor: 'rgba(54,57,62,1)',
+      },
+      headerTintColor: '#fff',
       // headerLeft: back(navigation)
     })
   },

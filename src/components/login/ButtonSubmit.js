@@ -24,7 +24,7 @@ const styles = {
     fontWeight: '600',
   },
   buttonStyle: {
-    backgroundColor: '#F26935',
+    backgroundColor: '#36393e',
     flex: 1,
     alignSelf: 'stretch',
     alignItems: 'center',
