@@ -8,3 +8,5 @@ export const API_URL = 'http://ejuris.xyz/webservice/';
 export const ROOT_URL = 'http://ejuris.xyz/';
 
 export const APP_COLOR = '#36393e';
+
+export const user_data = ['ggg@ggg.com.br', '202cb962ac59075b964b07152d234b70'];

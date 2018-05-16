@@ -8,26 +8,37 @@ import {API_URL} from '../config/constants'
 import axios from 'axios';
 
 
-export const processFetch = () => {
+export const processFetch = (mail, pwd) => {
 	return dispatch => {
 		dispatch(processFetchRequest());
-		axios.get(`${API_URL}login`)
-		.then(response => {
-			dispatch(processFetchSuccess(response.data))
+		axios.post(`${API_URL}login`, {
+			email: 'ggg@ggg.com.br',
+			senha: '202cb962ac59075b964b07152d234b70',
+			request: 'processes'
 		})
-		.catch( => {
-			dispatch(processFetchFail())	
+		.then(response => {
+			if(response.data.mensagem){
+				dispatch(processFetchFail());
+				console.log(response);	
+			} else {
+				dispatch(processFetchSuccess(response.data))	
+			}
+			
+		})
+		.catch( error => {
+			dispatch(processFetchFail());
+			console.log(error.request);	
 		});
 	}
 }
 
 const processFetchRequest = () => ({
-	type: PROCESS_FETCH_REQUEST
+	type: 'PROCESS_FETCH_REQUEST'
 });
 const processFetchSuccess = (processes) => ({
-	type: PROCESS_FETCH_SUCCESS,
+	type: 'PROCESS_FETCH_SUCCESS',
 	payload: processes
 });
 const processFetchFail = () => ({
-	type: PROCESS_FETCH_FAIL
+	type: 'PROCESS_FETCH_FAIL'
 });

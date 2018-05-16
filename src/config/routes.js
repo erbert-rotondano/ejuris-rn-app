@@ -2,9 +2,11 @@ import React, { Component } from 'react'
 import {TouchableOpacity} from 'react-native';
 import { Icon } from 'react-native-elements';
 import Home from '../screens/Home'
-import TestScreen from '../screens/TestScreen'
-import Login from '../screens/Login'
-import ProcessDetail from '../screens/ProcessDetail'
+import TestScreen from '../screens/TestScreen';
+import AddProcessScreen from '../screens/AddProcessScreen';
+import Login from '../screens/Login';
+import ProcessDetail from '../screens/ProcessDetail';
+import ProcessList from '../screens/ProcessList';
 
 import { StackNavigator } from 'react-navigation'
 
@@ -63,6 +65,30 @@ export const Navigator = new StackNavigator({
   	navigationOptions: ({ navigation }) => ({
       drawerLabel: 'ProcessDetail',
       title: 'Detalhes do Processo',
+      headerStyle: {
+        backgroundColor: 'rgba(54,57,62,1)',
+      },
+      headerTintColor: '#fff',
+      // headerLeft: back(navigation)
+    })
+  },
+  ProcessList: { 
+    screen: ProcessList ,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'ProcessList',
+      title: 'Lista de Atendimentos',
+      headerStyle: {
+        backgroundColor: 'rgba(54,57,62,1)',
+      },
+      headerTintColor: '#fff',
+      // headerLeft: back(navigation)
+    })
+  },
+  AddProcess: { 
+    screen: AddProcessScreen ,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'AddProcessScreen',
+      title: 'Cadastrar novo Atendimento',
       headerStyle: {
         backgroundColor: 'rgba(54,57,62,1)',
       },
