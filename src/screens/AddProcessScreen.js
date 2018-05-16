@@ -1,44 +1,86 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, TextInput } from 'react-native';
 import { List, ListItem, Text, Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
-import {APP_COLOR} from '../config/constants';
+import {APP_COLOR, DEVICE_WIDTH} from '../config/constants';
 
 class AddProcessScreen extends Component {
   render(){
     return(
         <View>
-        	<Text style={{fontSize: 15, marginLeft: 15, marginTop: 20, borderBottomColor: '#000000',
-    borderBottomWidth: 1}}> Informações do Atendimento </Text>
-        	<FormLabel>Cidade: </FormLabel>
-			    <FormInput containerStyle={styles.formInputStyle} autoFocus onChangeText={(value) => console.log(value)}/>
+        	<Text style={{fontSize: 15, marginLeft: 15, marginTop: 20}}> Informações do Atendimento </Text>
+          <TextInput
+                style={styles.input}
+                placeholder='Cidade: '
+                autoCapitalize={'none'}
+                returnKeyType={'done'}
+                autoCorrect={false}
+                placeholderTextColor='#AAAAAA'
+                underlineColorAndroid='transparent'
+                onChangeText={() => console.log('mudou texto')}/>
 
-          <FormLabel>Unidade Judicial: </FormLabel>
-          <FormInput containerStyle={styles.formInputStyle} onChangeText={(value) => console.log(value)}/>
+          <TextInput
+                style={styles.input}
+                placeholder='Unidade Judicial: '
+                autoCapitalize={'none'}
+                returnKeyType={'done'}
+                autoCorrect={false}
+                placeholderTextColor='#AAAAAA'
+                underlineColorAndroid='transparent'
+                onChangeText={() => console.log('mudou texto')}/>
 
-          <FormLabel>Número do Processo: </FormLabel>
-          <FormInput containerStyle={styles.formInputStyle} onChangeText={(value) => console.log(value)}/>
+          <TextInput
+                style={styles.input}
+                placeholder='Número do Processo: '
+                autoCapitalize={'none'}
+                returnKeyType={'done'}
+                autoCorrect={false}
+                placeholderTextColor='#AAAAAA'
+                underlineColorAndroid='transparent'
+                onChangeText={() => console.log('mudou texto')}/>
 
-          <FormLabel>Classe de Diligência: </FormLabel>
-          <FormInput containerStyle={styles.formInputStyle} onChangeText={(value) => console.log(value)}/>
+          <TextInput
+                style={styles.input}
+                placeholder='Classe de Diligência: '
+                autoCapitalize={'none'}
+                returnKeyType={'done'}
+                autoCorrect={false}
+                placeholderTextColor='#AAAAAA'
+                underlineColorAndroid='transparent'
+                onChangeText={() => console.log('mudou texto')}/>
 
-          <FormLabel>Observação: </FormLabel>
-          <FormInput containerStyle={styles.formInputStyle} onChangeText={(value) => console.log(value)}/>
+          <TextInput
+                style={styles.input}
+                placeholder='Observação: '
+                autoCapitalize={'none'}
+                returnKeyType={'done'}
+                autoCorrect={false}
+                placeholderTextColor='#AAAAAA'
+                underlineColorAndroid='transparent'
+                onChangeText={() => console.log('mudou texto')}/>
 			 
           <Button
-              style={{marginTop: 15}} 
-              raised
-              backgroundColor={APP_COLOR}
-              onPress={() => this.props.navigation.navigate('Home')}
-              title='Submeter' />
+                style={{marginTop: 15}} 
+                raised
+                backgroundColor={APP_COLOR}
+                onPress={() => this.props.navigation.navigate('Home')}
+                title='Submeter' />
        	</View>
     );
   }
 }
 const styles = {
-  formInputStyle:{
-    borderBottomColor: '#000000',
-    borderBottomWidth: 1
-  }
+  input: {
+      backgroundColor: 'rgba(255,255,255,0.4)',
+      width: DEVICE_WIDTH - 50,
+      height: 40,
+      paddingLeft: 10,
+      marginHorizontal: 20,
+      borderRadius: 3,
+      borderWidth: 1,
+      borderColor: '#DDDDDD',
+      color: '#555555',
+      marginTop: 15
+    },
 }
 
 export default AddProcessScreen;
