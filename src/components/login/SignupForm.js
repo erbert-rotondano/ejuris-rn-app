@@ -30,36 +30,37 @@ import {
   passwordConfirmationChanged,
   usernameChanged,
   phoneChanged,
-  birthDateChanged,
-  genderChanged,
+  addressChanged,
+  competenceChanged,
   agreementChanged,
   userSignup
 } from '../../actions/auth';
+import {APP_COLOR} from '../../config/constants'
 
 class SignupForm extends Component {
   constructor(props){
     super(props)
     this.state = {date:null}
-    this.state = {age:0}
+    this.state = {address:''}
     this.state = {phoneArea:''}
   }
 
-  birthDateIsValid() {    
-    let valid = this.refs['birthDateInput'].isValid()
+  addressIsValid() {    
+    let valid = this.refs['addressInput'].isValid()
     return valid;
   }
 
-  validateBirthDateInput(){
-    if(this.props.birthDate != ''){
-      if(!this.birthDateIsValid()) {
+  validateAddressInput(){
+    if(this.props.address != ''){
+      if(!this.addressIsValid()) {
         Alert.alert(
-          'Data inválida', 'Informe uma data de nascimento válida.',
+          'Endereço inválida', 'Informe um endereço válido.',
           [ {text: 'OK'}, ],
           { cancelable: false }
         )
-        this.birthDateChanged('');
-        this.refs['birthDateInput'].getElement().clear();
-        this.refs['birthDateInput'].getElement().focus();
+        this.addressChanged('');
+        this.refs['addressInput'].getElement().clear();
+        this.refs['addressInput'].getElement().focus();
       }
     }
   }
@@ -89,46 +90,28 @@ class SignupForm extends Component {
     this.props.phoneChanged(value.trim());
   }
 
-  birthDateChanged(value) {
-    this.props.birthDateChanged(value);
+  addressChanged(value) {
+    this.props.addressChanged(value);
     this.setState({date: value});
-    this._setUserAge(value);
-    this.birthDateIsValid();
+    this._setUserAddress(value);
   }
 
-  genderChanged(index, value) {
-    this.props.genderChanged(value);
+  competenceChanged(index, value) {
+    this.props.competenceChanged(value);
   }
 
   agreementChanged(value) {
     this.props.agreementChanged(value);
   }
 
-  _formatBirthDate(value) {
+  _formataddress(value) {
     let res = value.split("/");
     
     return res[2]+'-'+res[1]+'-'+res[0];
   } 
 
-  _setUserAge(value) {
-    this.setState({date: value});
-    let res = value.split("/");
-    
-    // TODO: Get "today" from the server side,
-    // to avoid a local hack (like changing the local date)
-    let today = new Date();
-    
-    // Value (date) has real month number (1-12)
-    // The res[1] -1 inform the month number in Javascript (0-11)
-    let brithDate = new Date(res[2], (res[1]-1), res[0]);
-
-    var age = today.getFullYear() - brithDate.getFullYear();
-    if ( new Date(today.getFullYear(), (today.getMonth()), today.getDate()) < 
-         new Date(today.getFullYear(), brithDate.getMonth(), brithDate.getDate()) ){
-      age--;
-    }
-
-    this.setState({age: age});
+  _setUserAddress(value) {
+    this.setState({address: value});
   }
 
   _passwordVerification(password, password_confirmation) {
@@ -181,13 +164,13 @@ class SignupForm extends Component {
 
   onButtonPress() {
     const { email, password, password_confirmation, username, phone,
-            birthDate, gender, agreement_status } = this.props;
+            address, competence, agreement_status } = this.props;
     let phoneArea = this.state.phoneArea;
     
     this.setState({formError: false});
 
     // if ( email && password && password_confirmation && username && phone && phoneArea &&
-    //   birthDate && gender && agreement_status ) {
+    //   address && competence && agreement_status ) {
     if ( email && password && password_confirmation && username && phone && phoneArea && agreement_status ) {
       
       if (this._validatePhoneArea(phoneArea)){
@@ -203,7 +186,7 @@ class SignupForm extends Component {
                 { cancelable: false }
               )
             } else {
-              this.props.userSignup({ email, password, password_confirmation, username, phoneArea, phone, birthDate, gender, agreement_status});
+              this.props.userSignup({ email, password, password_confirmation, username, phoneArea, phone, address, competence, agreement_status});
             }
 
           } else {
@@ -284,9 +267,7 @@ class SignupForm extends Component {
              await AsyncStorage.multiSet([
                 ['@authentication_token:key', this.props.authentication_token], 
                 ['@username:key', this.props.username], 
-                ['@email:key', this.props.email],
-                ['@area_id:key', this.props.area_id],
-                ['@card_number:key', this.props.card_number]
+                ['@email:key', this.props.email]
               ]);
           // await AsyncStorage.setItem('@authentication_token:key', this.props.authentication_token);
           // this.props.navigation.navigate('drawerStack');
@@ -312,16 +293,13 @@ class SignupForm extends Component {
       >
 
       <ScrollView>
-        <View style={{ height:200 }}>
-          <Logo/>
-        </View>
         <View style={styles.container}>
 
             <TouchableOpacity
               activeOpacity={0.7}
               onPress={ () => this.props.navigation.goBack() }
             >
-              <Text style={[styles.text,{textAlign:'center',marginBottom:20,color:'#555555'}]}>Já possui uma conta?<Text style={{color: '#F26935'}}> Acesse aqui.</Text></Text>
+              <Text style={[styles.text,{textAlign:'center',marginBottom:20,color:'#555555'}]}>Já possui uma conta?<Text style={{color: APP_COLOR}}> Acesse aqui.</Text></Text>
             </TouchableOpacity>
 
             {this.renderError()}
@@ -395,52 +373,32 @@ class SignupForm extends Component {
               />
             </View>
 
-            <TextInputMask
-              editable={!this.props.isFetching}
-              style={[styles.input, this.disabledInputStyle(), {marginRight:20,flex:2}]}
-              placeholder='Data de nascimento'
-              placeholderTextColor="#AAA"
-              // maxLength={}
-              autoCapitalize={'none'}
-              returnKeyType={'next'}
-              autoCorrect={false}
-              underlineColorAndroid='transparent'
-              ref={'birthDateInput'}
-              value={this.props.birthDate}
-              onChangeText={(date) => {this.birthDateChanged(date)}}
-              onBlur={() => this.validateBirthDateInput()}
-              type={'datetime'}
-              options={{
-                format: 'DD/MM/YYYY'
-              }}
-            />
-
-            <View style={{flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  paddingLeft:20,
-                  paddingTop:15}}>
-              <Text style={{color:'#555555',marginRight:10}}>Sexo:</Text>
-              <RadioGroup
-                onSelect = {(index, value) => this.genderChanged(index, value)}
-                color='#555555'
-                style={{
-                  flex: 1,
-                  flexDirection: 'row',
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                }}
-              >
-                <RadioButton value={1} color='orange' style={{padding:0,margin:0}} disabled={this.props.isFetching}>
-                    <Text style={{padding:0,margin:0,color:'#555555',marginRight:10}}>Masculino</Text>
-                </RadioButton>
-
-                <RadioButton value={2} color='orange' style={{padding:0,margin:0}} disabled={this.props.isFetching}>
-                    <Text style={{padding:0,margin:0,color:'#555555'}}>Feminino</Text>
-                </RadioButton>
-              </RadioGroup>
-            </View>
+            <TextInput
+                editable={!this.props.isFetching}
+                style={[styles.phoneInput, this.disabledInputStyle(), {marginRight:20,flex:2}]}
+                placeholder='Endereço'
+                autoCapitalize={'none'}
+                returnKeyType={'next'}
+                autoCorrect={false}
+                placeholderTextColor='#AAAAAA'
+                underlineColorAndroid='transparent'
+                ref={(input) => this.addressInput = input}
+                onChangeText={this.addressChanged.bind(this)}
+                value={this.props.address}
+              />
+              <TextInput
+                editable={!this.props.isFetching}
+                style={[styles.phoneInput, this.disabledInputStyle(), {marginRight:20,flex:2}]}
+                placeholder='Competencia'
+                autoCapitalize={'none'}
+                returnKeyType={'next'}
+                autoCorrect={false}
+                placeholderTextColor='#AAAAAA'
+                underlineColorAndroid='transparent'
+                ref={(input) => this.competenceInput = input}
+                onChangeText={this.competenceChanged.bind(this)}
+                value={this.props.competence}
+              />
 
             <TextInput
               editable={!this.props.isFetching}
@@ -471,17 +429,6 @@ class SignupForm extends Component {
               value={this.props.password_confirmation}
               ref={(input) => this.passwordConfInput = input}/>
 
-            <View style={styles.switchContainer}>
-              <Switch
-                onValueChange={(value) => this.agreementChanged(value)}
-                style={{marginLeft: 20}}
-                value={this.props.agreement_status} />
-              <Text style={{ color:'#555555',marginLeft:10,fontSize:12 }}>Concordo com os</Text>
-                <TouchableOpacity activeOpacity={0.7} onPress={()=>{Communications.web('http://www.clubehappy.com.br/termosdeuso.pdf')}}>
-                  <Text style={{ color:'#F26935',marginLeft:5,fontSize:12 }}>termos de uso.</Text>
-                </TouchableOpacity>
-            </View>
-
             <View style={styles.buttonSubmitWrapper}>
               {this.renderButton()}
             </View>
@@ -500,11 +447,9 @@ const mapStateToProps = (state) => ({
   password: state.auth.password,
   password_confirmation: state.auth.password_confirmation,
   username: state.auth.username,
-  card_number: state.auth.card_number,
-  area_id: state.auth.area_id,
   phone: state.auth.phone,
-  birthDate: state.auth.birthDate,
-  gender: state.auth.gender,
+  address: state.auth.address,
+  competence: state.auth.competence,
   agreement_status: state.auth.agreement_status,
   error: state.auth.error,
   signup_error_message: state.auth.signup_error_message,
@@ -517,8 +462,8 @@ export default connect(mapStateToProps, {
   passwordConfirmationChanged,
   usernameChanged,
   phoneChanged,
-  birthDateChanged,
-  genderChanged,
+  addressChanged,
+  competenceChanged,
   agreementChanged,
   userSignup
 })(SignupForm);
@@ -528,14 +473,11 @@ const DEVICE_HEIGHT = Dimensions.get('window').height;
 
 const styles = StyleSheet.create({
 	container: {
-		//flex: 3,
-		//alignItems: 'center',
     backgroundColor: '#FFFFFF',
-    paddingTop: 20,
-    marginLeft: 30,
-    marginRight: 30,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5
+    paddingTop: 30,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: DEVICE_HEIGHT-590
 	},
   input: {
     backgroundColor: 'rgba(255,255,255,0.4)',

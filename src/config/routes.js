@@ -5,6 +5,7 @@ import Home from '../screens/Home'
 import TestScreen from '../screens/TestScreen';
 import AddProcessScreen from '../screens/AddProcessScreen';
 import Login from '../screens/Login';
+import Signup from '../screens/Signup';
 import ProcessDetail from '../screens/ProcessDetail';
 import ProcessList from '../screens/ProcessList';
 
@@ -89,6 +90,18 @@ export const Navigator = new StackNavigator({
     navigationOptions: ({ navigation }) => ({
       drawerLabel: 'AddProcessScreen',
       title: 'Cadastrar novo Atendimento',
+      headerStyle: {
+        backgroundColor: 'rgba(54,57,62,1)',
+      },
+      headerTintColor: '#fff',
+      // headerLeft: back(navigation)
+    })
+  },
+  SignUp: { 
+    screen: Signup ,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'Signup',
+      title: 'Cadastrar-se',
       headerStyle: {
         backgroundColor: 'rgba(54,57,62,1)',
       },

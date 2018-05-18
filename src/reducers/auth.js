@@ -13,15 +13,11 @@ const initialState = {
 	password: '',
 	password_confirmation: '',
 	username: '',
+	competence: '',
+	address: '',
 	phone: '',
-	birthDate: '',
-	gender: '',
-	area_id: '',
-	card_number: '',
-	agreement_status: false,
 	isFetching: false,
   	isAuthenticated: false,
-  	authentication_token: '',
   	error: false,
   	error_status: '',
   	error_message: '',
@@ -49,12 +45,10 @@ const reducer = (state = initialState, action) => {
       		return { ...state, username: action.payload };
       	case 'PHONE_CHANGED':
       		return { ...state, phone: action.payload };
-      	case 'BIRTHDATE_CHANGED':
-      		return { ...state, birthDate: action.payload };
-      	case 'GENDER_CHANGED':
-      		return { ...state, gender: action.payload };
-      	case 'AGREEMENT_CHANGED':
-      		return { ...state, agreement_status: action.payload };
+      	case 'ADDRESS_CHANGED':
+      		return { ...state, address: action.payload };
+      	case 'COMPETENCE_CHANGED':
+      		return { ...state, competence: action.payload };
 		case LOGIN_REQUEST:
 			return {
 				...state,
@@ -69,8 +63,8 @@ const reducer = (state = initialState, action) => {
 				authentication_token: action.authentication_token,
 				email: action.email,
 				username: action.username,
-				area_id: action.area_id+'',
-				card_number: action.card_number
+				competence: action.competence,
+				address: action.address
 			}
 		case LOGIN_FAILED:
 			return {
@@ -94,8 +88,8 @@ const reducer = (state = initialState, action) => {
 				authentication_token: action.authentication_token,
 				email: action.email,
 				username: action.username,
-				area_id: action.area_id+'',
-				card_number: action.card_number
+				competence: action.competence,
+				address: action.address
 			}
 		case SIGNUP_FAILED:
 			return {
@@ -115,7 +109,5 @@ const reducer = (state = initialState, action) => {
 			return state;
 	}
 };
-
-console.log()
 
 export default reducer;

@@ -46,17 +46,17 @@ export const phoneChanged = (phone) => {
   };
 };
 
-export const birthDateChanged = (birthDate) => {
+export const competenceChanged = (competence) => {
   return {
-    type: 'BIRTHDATE_CHANGED',
-    payload: birthDate
+    type: 'COMPETENCE_CHANGED',
+    payload: competence
   };
 };
 
-export const genderChanged = (gender) => {
+export const addressChanged = (address) => {
   return {
-    type: 'GENDER_CHANGED',
-    payload: gender
+    type: 'ADDRESS_CHANGED',
+    payload: address
   };
 };
 
@@ -70,10 +70,17 @@ export const agreementChanged = (agreement_status) => {
 export const userLogin = ( {email, password} ) => {
 	return dispatch => {
 		dispatch(loginRequest());
-		axios.post(`${API_URL}login`, {
-			email: email,
-			password: password
-		})
+		const config = {
+		  headers: {
+			    "Content-Type": "application/x-www-form-urlencoded",
+			  }
+		};
+		var postData = new FormData();
+		postData.append("email", email);
+		postData.append("senha", password);
+		postData.append("request", "processes");
+
+		axios.post(`${API_URL}login`, postData, config)
 		.then(response => {
 			dispatch(loginSuccess(response.data))
 			// console.log(response.data.email);
@@ -100,19 +107,24 @@ export const userLogin = ( {email, password} ) => {
 	}
 }
 
-export const userSignup = ( {email, password, password_confirmation, username, phoneArea, phone, birthDate, gender, agreement_status} ) => {
+export const userSignup = ( {email, password, password_confirmation, username, phoneArea, phone, competence, address, agreement_status} ) => {
 	return dispatch => {
 		dispatch(signupRequest());
-		axios.post(`${API_URL}register`, {
-			name: username,
-			email: email,
-			phone: '(' + phoneArea + ')' + phone,
-			birthdate: birthDate,
-			gender: gender,
-			agreement_status: agreement_status,
-			password: password,
-			c_password: password_confirmation
-		})
+		dispatch(loginRequest());
+		const config = {
+		  headers: {
+			    "Content-Type": "application/x-www-form-urlencoded",
+			  }
+		};
+		var postData = new FormData();
+		postData.append("email", email);
+		postData.append("senha", password);
+		postData.append("nome", username);
+		postData.append("competencia", competence);
+		postData.append("telefone", '(' + phoneArea + ')' + phone);
+		postData.append("endereco", address);
+
+		axios.post(`${API_URL}cadastro_usuario`, postData, config)
 		.then(response => {
 			dispatch(signupSuccess(response.data))
 		})

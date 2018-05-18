@@ -5,7 +5,7 @@ import {
 } from '../actions/actionTypes';
 
 const initialState = {
-	process: [],
+	userprocess: [],
 	loaded: false,
 	loading: true
 };
@@ -20,7 +20,7 @@ let http_errors = {
 const reducer = (state = initialState, action) => {
 	switch (action.type){
 		case PROCESS_FETCH_SUCCESS:
-      		return { ...state, process: action.payload, loading: false, loaded: true };
+      		return { ...state, userprocess: action.payload, loading: false, loaded: true };
     	case PROCESS_FETCH_FAIL:
       		return { ...state, loading: false, loaded: false };
       	case PROCESS_FETCH_REQUEST:

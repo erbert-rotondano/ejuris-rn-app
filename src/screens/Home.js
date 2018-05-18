@@ -96,7 +96,7 @@ const styles = {
   	},
 }
 const mapStateToProps = (state) => ({
-  process: state.process,
+  userprocess: state.userprocess,
 });
 
 export default connect(mapStateToProps, {processFetch})(Home);
