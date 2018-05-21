@@ -9,7 +9,7 @@ import axios from 'axios';
 
 export const processFetch = (mail, pwd) => {
 	return dispatch => {
-		// dispatch(processFetchRequest());
+		dispatch(processFetchRequest());
 		const config = {
 		  headers: {
 			    "Content-Type": "application/x-www-form-urlencoded",

@@ -73,6 +73,7 @@ export const userLogin = ( {email, password} ) => {
 		const config = {
 		  headers: {
 			    "Content-Type": "application/x-www-form-urlencoded",
+			    "Cache-Control": "no-cache"
 			  }
 		};
 		var postData = new FormData();
@@ -90,15 +91,15 @@ export const userLogin = ( {email, password} ) => {
 		.catch(error => {
 			
 			if (error.response) {
-				// console.log(error.response.status);
+				console.log(error.response.status);
 				dispatch(loginFailed(error.response.status))
 			} else if (error.request) {
-				// 	console.log(error.request);
+					console.log(error.request);
 				// 	console.log('Error request', error.request.status);
 				// 	console.log('Error request', error.request._response);
 				dispatch(loginFailed(error.request.status))
 			} else {
-				// 	console.log('Error', error.message);
+					console.log('Error', error.message);
 				// 	console.log('Error ', error.request.status);
 				dispatch(loginFailed(error.request.status))
 			}
@@ -178,11 +179,7 @@ export const loginRequest = () => ({
 });
 export const loginSuccess = (data) => ({
 	type: LOGIN_SUCCESS,
-	authentication_token: data.authentication_token,
 	email: data.email,
-	username: data.username,
-	area_id: data.area_id,
-	card_number: data.card_number
 });
 export const loginFailed = (status) => ({
 	type: LOGIN_FAILED,

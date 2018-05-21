@@ -60,6 +60,9 @@ class LoginForm extends Component {
         );
       }
     }
+    if(this.props.isAuthenticated){
+      this.props.navigation.navigate('Home');
+    }
     return null;
   }
 
@@ -88,7 +91,7 @@ class LoginForm extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    this._setAuthentication_token().done(); 
+    // this._setAuthentication_token().done(); 
   }
 
   _loadAuthentication_token = async () => {
@@ -117,11 +120,7 @@ class LoginForm extends Component {
       if(isAuthenticated == true) {
         try {
              await AsyncStorage.multiSet([
-                ['@authentication_token:key', this.props.authentication_token], 
-                ['@username:key', this.props.username], 
                 ['@email:key', this.props.email],
-                ['@area_id:key', this.props.area_id],
-                ['@card_number:key', this.props.card_number]
               ]);
           // await AsyncStorage.setItem('@authentication_token:key', this.props.authentication_token);
           // this.props.navigation.navigate('drawerStack');
@@ -180,15 +179,11 @@ class LoginForm extends Component {
 
 const mapStateToProps = (state) => ({
   email: state.auth.email,
-  username: state.auth.username,
   password: state.auth.password,
-  area_id: state.auth.area_id,
-  card_number: state.auth.card_number,
   error: state.auth.error,
   error_message: state.auth.error_message,
   isFetching: state.auth.isFetching,
   isAuthenticated: state.auth.isAuthenticated,
-  authentication_token: state.auth.authentication_token,
 });
 
 export default connect(mapStateToProps, { emailChanged, passwordChanged, userLogin })(LoginForm);

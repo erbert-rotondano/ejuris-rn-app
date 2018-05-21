@@ -60,11 +60,7 @@ const reducer = (state = initialState, action) => {
 				...state,
 				...initialState,
 				isAuthenticated: true,
-				authentication_token: action.authentication_token,
 				email: action.email,
-				username: action.username,
-				competence: action.competence,
-				address: action.address
 			}
 		case LOGIN_FAILED:
 			return {
