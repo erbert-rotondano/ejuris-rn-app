@@ -85,9 +85,9 @@ export const userLogin = ( {email, password} ) => {
 		.then(response => {
 			if(response.data.id){
 				dispatch(loginSuccess(response.data));
-				
+
 			} else {
-				dispatch(loginFailed('error401'));
+				dispatch(loginFailed(401));
 			}
 			console.log('response json: ', response.data);
 			
