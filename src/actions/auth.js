@@ -83,8 +83,13 @@ export const userLogin = ( {email, password} ) => {
 
 		axios.post(`${API_URL}login`, postData, config)
 		.then(response => {
+			if(response.data.id){
+				dispatch(loginSuccess(response.data));
+				
+			} else {
+				dispatch(loginFailed('error401'));
+			}
 			console.log('response json: ', response.data);
-			dispatch(loginSuccess(response.data));
 			
 			// console.log(response.data.email);
 			// console.log(response.data.authentication_token);

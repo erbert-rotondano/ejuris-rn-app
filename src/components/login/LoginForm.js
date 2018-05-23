@@ -113,7 +113,7 @@ class LoginForm extends Component {
   _loadAuthentication_token = async () => {
     AsyncStorage.getItem('@email:key').then((email) => {
       AsyncStorage.getItem('@password:key').then((password) => {
-        if(email && password){
+        if(email && password && this.props.isAuthenticated){
           this.props.navigation.navigate('Home');
         }
       }).catch((error) => {
@@ -130,7 +130,7 @@ class LoginForm extends Component {
     let error = this.props.error;
 
     if(error){
-      console.log(error_message);
+      console.log(this.props.error_message);
     } else {
       if(isAuthenticated == true) {    
         console.log('should auth');
