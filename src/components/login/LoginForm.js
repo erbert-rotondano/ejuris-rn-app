@@ -18,6 +18,7 @@ import { Spinner } from './Spinner';
 import apiUtils from '../../config/apiUtils';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, userLogin } from '../../actions/auth';
+import md5 from "react-native-md5";
 
 class LoginForm extends Component {
   
@@ -33,8 +34,17 @@ class LoginForm extends Component {
   }
 
   onButtonPress() {
-    const { email, password } = this.props;
-    this.props.userLogin({ email, password });
+    
+    const passwordEncrypted = md5.hex_md5( this.props.password + '' );
+        console.log(">>>>hex_md5:", this.props.password);
+    // console.log(passwordEncrypted);
+    this.props.userLogin({ email: this.props.email, password: passwordEncrypted });
+    // setTimeout(() => {
+    //   this._setAuthentication_token().done();     
+    // }, 400);
+
+    
+    
   }
 
   renderError() {
@@ -94,10 +104,12 @@ class LoginForm extends Component {
     this._loadAuthentication_token().done();
   }
 
-  componentDidUpdate() {
+  // componentDidUpdate() {
+    
+  // }
+  componentDidUpdate(prevProps, prevState) {
     this._setAuthentication_token().done(); 
   }
-
   _loadAuthentication_token = async () => {
     AsyncStorage.getItem('@email:key').then((email) => {
       AsyncStorage.getItem('@password:key').then((password) => {
@@ -113,20 +125,18 @@ class LoginForm extends Component {
   }
 
   _setAuthentication_token = async () => {
+    console.log('set auth chamado');
     let isAuthenticated = this.props.isAuthenticated;
     let error = this.props.error;
 
     if(error){
-      // console.log(error_message);
+      console.log(error_message);
     } else {
-      if(isAuthenticated == true) {
-        try {
-             // await AsyncStorage.multiSet([
-             //    ['@email:key', this.props.email],
-             //    ['@password:key', this.props.password]
-             //  ]);
+      if(isAuthenticated == true) {    
+        console.log('should auth');
           AsyncStorage.setItem('@email:key', this.props.email).then(() => {
-            AsyncStorage.setItem('@password:key', 'ggg').then(() => {
+            console.log('setando email');
+            AsyncStorage.setItem('@password:key', this.props.password).then(() => {
               if(this.props.password){
                 this.props.navigation.navigate('Home');
                 console.log('deveria navegar');      
@@ -136,14 +146,12 @@ class LoginForm extends Component {
               }).catch(() => {
                 console.log('erro ao setar a senha');
               })
+              console.log('setou email');
           }).catch(() => {
               console.log('erro ao setar email');
           })
-          
-          
-        } catch (error) {
-          // Error saving data
-        }
+      } else {
+        console.log('not auth');
       }
     }
   }
