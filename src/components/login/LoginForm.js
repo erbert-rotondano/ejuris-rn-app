@@ -20,15 +20,7 @@ import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, userLogin } from '../../actions/auth';
 
 class LoginForm extends Component {
-  _navigateTo = (routeName: string) => {
-    const actionToDispatch = NavigationActions.reset({
-      index: 0,
-      key: null,
-      actions: [NavigationActions.navigate({ routeName })]
-    })
-    this.props.navigation.dispatch(actionToDispatch)
-  }
-
+  
   emailChanged(value) {
     // const email = _.lowerCase(value.trim());
     // lowDash needed
@@ -99,30 +91,25 @@ class LoginForm extends Component {
   }
 
   componentWillMount() {
-    // this._loadAuthentication_token().done();
+    this._loadAuthentication_token().done();
   }
 
   componentDidUpdate() {
     this._setAuthentication_token().done(); 
   }
-  // componentWillReceiveProps(){
-  //     this._setAuthentication_token().done(); 
-  // }
 
   _loadAuthentication_token = async () => {
-    try {
-      var value = await AsyncStorage.getItem('@authentication_token:key');
-      if (value !== null){
-        // We have data!!
-        // console.log('We have data');
-        console.log(value);
-        // this.props.navigation.navigate('drawerStack');
-        this._navigateTo('drawerStack')
-      }
-    } catch (error) {
-      // Error retrieving data
-      // console.log('Error retrieving data');
-    }
+    AsyncStorage.getItem('@email:key').then((email) => {
+      AsyncStorage.getItem('@password:key').then((password) => {
+        if(email && password){
+          this.props.navigation.navigate('Home');
+        }
+      }).catch((error) => {
+        console.log('não achou senha:', error);
+      });
+    }).catch((error) => {
+      console.log('não achou email:', error);
+    });
   }
 
   _setAuthentication_token = async () => {
