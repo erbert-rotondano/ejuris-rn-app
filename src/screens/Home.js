@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, TextInput } from 'react-native';
+import { View, ScrollView, TextInput, AsyncStorage } from 'react-native';
 import { List, ListItem, Text, Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import {APP_COLOR, user_data, DEVICE_WIDTH} from '../config/constants';
 import {processFetch} from '../actions/process';
@@ -7,7 +7,12 @@ import { connect } from 'react-redux';
 
 class Home extends Component {
 	componentWillMount(){
-		this.props.processFetch(user_data[0], user_data[1]);
+		AsyncStorage.getItem('@password:key').then((pwd) => {
+			console.log('senha: ', pwd)
+		});
+		AsyncStorage.getItem('@email:key').then((pwd) => {
+			console.log('email: ', pwd)
+		});
 	}
 	
   	render(){

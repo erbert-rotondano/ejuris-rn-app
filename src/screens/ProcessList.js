@@ -1,25 +1,40 @@
 import React, { Component } from 'react';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, AsyncStorage } from 'react-native';
 import { List, ListItem, Text } from 'react-native-elements';
+import {processFetch} from '../actions/process';
+import { connect } from 'react-redux';
 
 class ProcessList extends Component {
-  process = [
-		{id: 1, protocol: 311251, process_number: '0028-1482.144-00BA', title: 'Um processo teste'},
-		{id: 2, protocol: 311251, process_number: '0028-1482.144-00BA', title: 'Outro processo teste'},
-		{id: 3, protocol: 311251, process_number: '0028-1482.144-00BA', title: 'Mais Um processo teste'},
-		{id: 4, protocol: 311251, process_number: '0028-1482.144-00BA', title: 'Um outro processo teste'},
-		{id: 5, protocol: 311251, process_number: '0028-1482.144-00BA', title: 'Um processo teste diferente'},
-		{id: 6, protocol: 311251, process_number: '0028-1482.144-00BA', title: 'Um processo teste que não é o mesmo'},
-		{id: 7, protocol: 311251, process_number: '0028-1482.144-00BA', title: 'Um processo teste qualquer'},
-		{id: 8, protocol: 311251, process_number: '0028-1482.144-00BA', title: 'Esse aqui é outro processo teste'},
-		{id: 9, protocol: 311251, process_number: '0028-1482.144-00BA', title: 'Um simples processo teste'},
-		{id: 10, protocol: 311251, process_number: '0028-1482.144-00BA', title: 'Mais outro processo teste'},
-		{id: 11, protocol: 311251, process_number: '0028-1482.144-00BA', title: 'Outro processo teste'},
-		{id: 12, protocol: 311251, process_number: '0028-1482.144-00BA', title: 'Mais Um processo teste'},
-		{id: 13, protocol: 311251, process_number: '0028-1482.144-00BA', title: 'Um outro processo teste'},
-		{id: 14, protocol: 311251, process_number: '0028-1482.144-00BA', title: 'Um processo teste diferente'},
-		{id: 15, protocol: 311251, process_number: '0028-1482.144-00BA', title: 'Um processo teste que não é o mesmo'},
-	]
+  
+	componentWillMount(){
+		AsyncStorage.getItem('@email:key').then((email) => {
+			AsyncStorage.getItem('@password:key').then((password) => {
+				this.props.processFetch(email, password);	
+			}).catch(() => {
+				console.log('erro ao pegar a senha');
+			})
+		}).catch(() => {
+				console.log('erro ao pegar o email');
+			})
+			
+		
+	}
+	renderItems(){
+		if(this.props.loaded){
+		// this.props.userprocess.map((l, i) => (
+	 //                <ListItem
+	 //                  containerStyle={{borderBottomColor: '#EEE'}}
+	 //                  titleStyle={{ fontSize: 18 }}
+  //                     onPress={ () => this.props.navigation.navigate('ProcessDetail', {item: l}) }
+	 //                  hideChevron
+	 //                  key={l.id}
+	 //                  title={'Processo: ' +l.numero}
+	 //                  subtitle={'Protocolo: ' + l.protocolo}
+	 //                />
+	 //              ))
+	 	console.log(this.props.userprocess);
+		}
+	}
   render(){
     return(
         <ScrollView style={{flex: 1}}>
@@ -29,21 +44,17 @@ class ProcessList extends Component {
 	                marginTop: 0,
 	                borderTopWidth: 0,
 	              }}>
-	              {this.process.map((l, i) => (
-	                <ListItem
-	                  containerStyle={{borderBottomColor: '#EEE'}}
-	                  titleStyle={{ fontSize: 18 }}
-                      onPress={ () => this.props.navigation.navigate('ProcessDetail', {item: l}) }
-	                  hideChevron
-	                  key={l.id}
-	                  title={'Processo: ' +l.process_number}
-	                  subtitle={'Protocolo: ' + l.protocol}
-	                />
-	              ))}
+	              {this.renderItems()}
 	            </List>
             </ScrollView>
     );
   }
 }
 
-export default ProcessList;
+const mapStateToProps = (state) => ({
+  userprocess: state.userprocess,
+  loading: state.userprocess.loading,	
+  loaded: state.userprocess.loaded
+});
+
+export default connect(mapStateToProps, {processFetch})(ProcessList);

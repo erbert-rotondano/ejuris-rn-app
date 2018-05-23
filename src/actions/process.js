@@ -23,6 +23,8 @@ export const processFetch = (mail, pwd) => {
 		axios.post(`${API_URL}login`, postData, config)
 		  .then(function (response) {
 		  	dispatch(processFetchSuccess(response.data.processes));
+		  	console.log(response.data);
+		  	console.log(mail, pwd);
 		  })
 		  .catch(function (error) {
 		  	dispatch(processFetchFail());

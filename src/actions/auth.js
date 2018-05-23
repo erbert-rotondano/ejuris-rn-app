@@ -83,7 +83,9 @@ export const userLogin = ( {email, password} ) => {
 
 		axios.post(`${API_URL}login`, postData, config)
 		.then(response => {
-			dispatch(loginSuccess(response.data))
+			console.log('response json: ', response.data);
+			dispatch(loginSuccess(response.data));
+			
 			// console.log(response.data.email);
 			// console.log(response.data.authentication_token);
 			// console.log(response);
@@ -180,6 +182,7 @@ export const loginRequest = () => ({
 export const loginSuccess = (data) => ({
 	type: LOGIN_SUCCESS,
 	email: data.email,
+	password: data.password
 });
 export const loginFailed = (status) => ({
 	type: LOGIN_FAILED,

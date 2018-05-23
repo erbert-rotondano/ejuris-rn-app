@@ -60,9 +60,21 @@ class LoginForm extends Component {
         );
       }
     }
-    if(this.props.isAuthenticated){
-      this.props.navigation.navigate('Home');
-    }
+    // if(this.props.isAuthenticated){
+    //   // set auth
+    //   AsyncStorage.multiSet([
+    //         ['@email:key', this.props.email],
+    //         ['@password:key', this.props.password]
+    //       ]).then(() => {
+    //             console.log('deveria navegar');
+    //       })
+        
+    //     .catch (error => {
+    //       console.log('deu erro');
+    //     });
+    //     this.props.navigation.navigate('Home');
+      
+    // }
     return null;
   }
 
@@ -90,9 +102,12 @@ class LoginForm extends Component {
     // this._loadAuthentication_token().done();
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    // this._setAuthentication_token().done(); 
+  componentDidUpdate() {
+    this._setAuthentication_token().done(); 
   }
+  // componentWillReceiveProps(){
+  //     this._setAuthentication_token().done(); 
+  // }
 
   _loadAuthentication_token = async () => {
     try {
@@ -119,13 +134,26 @@ class LoginForm extends Component {
     } else {
       if(isAuthenticated == true) {
         try {
-             await AsyncStorage.multiSet([
-                ['@email:key', this.props.email],
-              ]);
-          // await AsyncStorage.setItem('@authentication_token:key', this.props.authentication_token);
-          // this.props.navigation.navigate('drawerStack');
-          this._navigateTo('drawerStack');
-          console.log('deveria navegar');
+             // await AsyncStorage.multiSet([
+             //    ['@email:key', this.props.email],
+             //    ['@password:key', this.props.password]
+             //  ]);
+          AsyncStorage.setItem('@email:key', this.props.email).then(() => {
+            AsyncStorage.setItem('@password:key', 'ggg').then(() => {
+              if(this.props.password){
+                this.props.navigation.navigate('Home');
+                console.log('deveria navegar');      
+              } else {
+                console.log('senha tava null');      
+              }
+              }).catch(() => {
+                console.log('erro ao setar a senha');
+              })
+          }).catch(() => {
+              console.log('erro ao setar email');
+          })
+          
+          
         } catch (error) {
           // Error saving data
         }
