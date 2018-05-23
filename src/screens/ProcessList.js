@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, ScrollView, AsyncStorage } from 'react-native';
 import { List, ListItem, Text } from 'react-native-elements';
 import {processFetch} from '../actions/process';
+import Spinner from '../components/common/Spinner';
 import { connect } from 'react-redux';
 
 class ProcessList extends Component {
@@ -20,21 +21,47 @@ class ProcessList extends Component {
 		
 	}
 	renderItems(){
-		if(this.props.loaded){
-		// this.props.userprocess.map((l, i) => (
-	 //                <ListItem
-	 //                  containerStyle={{borderBottomColor: '#EEE'}}
-	 //                  titleStyle={{ fontSize: 18 }}
-  //                     onPress={ () => this.props.navigation.navigate('ProcessDetail', {item: l}) }
-	 //                  hideChevron
-	 //                  key={l.id}
-	 //                  title={'Processo: ' +l.numero}
-	 //                  subtitle={'Protocolo: ' + l.protocolo}
-	 //                />
-	 //              ))
-	 	console.log(this.props.userprocess);
-		}
-	}
+      if( this.props.loading ){
+        return(
+          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <Spinner size="large" />
+          </View>
+        )
+      } else {
+        if(this.props.loaded){
+          return(
+            <ScrollView style={{flex: 1}}>
+            <List
+              containerStyle={{
+                marginBottom: 0,
+                marginTop: 0,
+                borderTopWidth: 0,
+              }}>
+              {this.props.userprocess.map((l, i) => (
+	                <ListItem
+	                  containerStyle={{borderBottomColor: '#EEE'}}
+	                  titleStyle={{ fontSize: 18 }}
+                      onPress={ () => this.props.navigation.navigate('ProcessDetail', {item: l}) }
+	                  hideChevron
+	                  key={l.id}
+	                  title={'Processo: ' +l.numero}
+	                  subtitle={'Protocolo: ' + l.protocolo}
+	                />
+	              ))}
+            </List>
+            </ScrollView>
+          )
+        } else {
+        return(
+          <View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center'}}>
+            <Text style={{fontSize: 14, color: '#252525', textAlign: 'center'}}>
+              Nenhum atendimento encontrado.
+            </Text>
+          </View>
+        )
+      }
+    }
+  }
   render(){
     return(
         <ScrollView style={{flex: 1}}>
@@ -52,7 +79,7 @@ class ProcessList extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  userprocess: state.userprocess,
+  userprocess: state.userprocess.userprocess,
   loading: state.userprocess.loading,	
   loaded: state.userprocess.loaded
 });

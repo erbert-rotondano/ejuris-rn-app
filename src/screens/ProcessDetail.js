@@ -5,7 +5,7 @@ class ProcessDetail extends Component {
   render(){
     return(
         <View>
-        	<Text>{this.props.navigation.state.params.item.title}</Text>
+        	<Text>{this.props.navigation.state.params.item.numero}</Text>
        	</View>
     );
   }
