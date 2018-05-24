@@ -6,7 +6,7 @@ import {
 	SIGNUP_FAILED,
 	SIGNUP_REQUEST,
 	LOGOUT_SUCCESS, } from '../actions/actionTypes';
-
+import md5 from "react-native-md5";
 import {API_URL} from '../config/constants'
 
 import axios from 'axios';
@@ -115,10 +115,9 @@ export const userLogin = ( {email, password} ) => {
 	}
 }
 
-export const userSignup = ( {email, password, password_confirmation, username, phoneArea, phone, competence, address, agreement_status} ) => {
+export const userSignup = ( {email, password, password_confirmation, username, phoneArea, phone, competence, address} ) => {
 	return dispatch => {
 		dispatch(signupRequest());
-		dispatch(loginRequest());
 		const config = {
 		  headers: {
 			    "Content-Type": "application/x-www-form-urlencoded",
@@ -126,7 +125,8 @@ export const userSignup = ( {email, password, password_confirmation, username, p
 		};
 		var postData = new FormData();
 		postData.append("email", email);
-		postData.append("senha", password);
+		const passwordEncrypted = md5.hex_md5( password + '' );
+		postData.append("senha", passwordEncrypted);
 		postData.append("nome", username);
 		postData.append("competencia", competence);
 		postData.append("telefone", '(' + phoneArea + ')' + phone);
@@ -134,7 +134,14 @@ export const userSignup = ( {email, password, password_confirmation, username, p
 
 		axios.post(`${API_URL}cadastro_usuario`, postData, config)
 		.then(response => {
-			dispatch(signupSuccess(response.data))
+			// if(response.data.id){
+				// dispatch(signupSuccess(response.data));
+				console.log(response.data);
+
+			// } else {
+				// dispatch(signupFailed(401, ''))
+			// }
+			
 		})
 		.catch(error => {
 			if (error.response) {
@@ -199,11 +206,8 @@ export const signupRequest = () => ({
 });
 export const signupSuccess = (data) => ({
 	type: SIGNUP_SUCCESS,
-	authentication_token: data.authentication_token,
 	email: data.email,
 	username: data.username,
-	area_id: data.area_id,
-	card_number: data.card_number
 });
 export const signupFailed = (error_status, error_message) => ({
 	type: SIGNUP_FAILED,

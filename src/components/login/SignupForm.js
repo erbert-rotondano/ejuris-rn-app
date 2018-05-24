@@ -32,7 +32,6 @@ import {
   phoneChanged,
   addressChanged,
   competenceChanged,
-  agreementChanged,
   userSignup
 } from '../../actions/auth';
 import {APP_COLOR} from '../../config/constants'
@@ -100,9 +99,6 @@ class SignupForm extends Component {
     this.props.competenceChanged(value);
   }
 
-  agreementChanged(value) {
-    this.props.agreementChanged(value);
-  }
 
   _formataddress(value) {
     let res = value.split("/");
@@ -164,14 +160,14 @@ class SignupForm extends Component {
 
   onButtonPress() {
     const { email, password, password_confirmation, username, phone,
-            address, competence, agreement_status } = this.props;
+            address, competence } = this.props;
     let phoneArea = this.state.phoneArea;
     
     this.setState({formError: false});
 
     // if ( email && password && password_confirmation && username && phone && phoneArea &&
     //   address && competence && agreement_status ) {
-    if ( email && password && password_confirmation && username && phone && phoneArea && agreement_status ) {
+    if ( email && password && password_confirmation && username && phone && phoneArea ) {
       
       if (this._validatePhoneArea(phoneArea)){
 
@@ -186,7 +182,7 @@ class SignupForm extends Component {
                 { cancelable: false }
               )
             } else {
-              this.props.userSignup({ email, password, password_confirmation, username, phoneArea, phone, address, competence, agreement_status});
+              this.props.userSignup({ email, password, password_confirmation, username, phoneArea, phone, address, competence});
             }
 
           } else {
@@ -450,7 +446,6 @@ const mapStateToProps = (state) => ({
   phone: state.auth.phone,
   address: state.auth.address,
   competence: state.auth.competence,
-  agreement_status: state.auth.agreement_status,
   error: state.auth.error,
   signup_error_message: state.auth.signup_error_message,
   isFetching: state.auth.isFetching,
@@ -464,7 +459,6 @@ export default connect(mapStateToProps, {
   phoneChanged,
   addressChanged,
   competenceChanged,
-  agreementChanged,
   userSignup
 })(SignupForm);
 
