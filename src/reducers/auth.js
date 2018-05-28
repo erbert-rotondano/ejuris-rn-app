@@ -86,7 +86,8 @@ const reducer = (state = initialState, action) => {
 				email: action.email,
 				username: action.username,
 				competence: action.competence,
-				address: action.address
+				address: action.address,
+				password: action.password
 			}
 		case SIGNUP_FAILED:
 			return {

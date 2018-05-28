@@ -36,7 +36,7 @@ class LoginForm extends Component {
   onButtonPress() {
     
     const passwordEncrypted = md5.hex_md5( this.props.password + '' );
-        console.log(">>>>hex_md5:", this.props.password);
+        console.log(">>>>hex_md5:", passwordEncrypted);
     // console.log(passwordEncrypted);
     this.props.userLogin({ email: this.props.email, password: passwordEncrypted });
     // setTimeout(() => {

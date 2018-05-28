@@ -13,7 +13,8 @@ import {
   Image,
   Alert,
   ScrollView,
-  Platform
+  Platform,
+  AsyncStorage
 } from 'react-native';
 import DatePicker from 'react-native-datepicker';
 import { TextInputMask } from 'react-native-masked-text'
@@ -34,7 +35,8 @@ import {
   competenceChanged,
   userSignup
 } from '../../actions/auth';
-import {APP_COLOR} from '../../config/constants'
+import {APP_COLOR} from '../../config/constants';
+import md5 from "react-native-md5";
 
 class SignupForm extends Component {
   constructor(props){
@@ -182,7 +184,8 @@ class SignupForm extends Component {
                 { cancelable: false }
               )
             } else {
-              this.props.userSignup({ email, password, password_confirmation, username, phoneArea, phone, address, competence});
+              const passwordEncrypted = md5.hex_md5( password + '' );
+              this.props.userSignup({ email, passwordEncrypted, password_confirmation, username, phoneArea, phone, address, competence});
             }
 
           } else {
@@ -252,26 +255,34 @@ class SignupForm extends Component {
     }
   }
   _setAuthentication_token = async () => {
+    console.log('set auth chamado');
     let isAuthenticated = this.props.isAuthenticated;
     let error = this.props.error;
 
     if(error){
-      // console.log(error_message);
+      console.log(this.props.error_message);
     } else {
-      if(isAuthenticated == true) {
-        try {
-             await AsyncStorage.multiSet([
-                ['@authentication_token:key', this.props.authentication_token], 
-                ['@username:key', this.props.username], 
-                ['@email:key', this.props.email]
-              ]);
-          // await AsyncStorage.setItem('@authentication_token:key', this.props.authentication_token);
-          // this.props.navigation.navigate('drawerStack');
-          this._navigateTo('drawerStack');
-          console.log('deveria navegar');
-        } catch (error) {
-          // Error saving data
-        }
+      if(isAuthenticated == true) {    
+        console.log('should auth', this.props.email);
+          AsyncStorage.setItem('@email:key', this.props.email).then(() => {
+            if(this.props.password){
+              const passwordEncrypted = md5.hex_md5( this.props.password + '' );
+              AsyncStorage.setItem('@password:key', passwordEncrypted).then(() => {
+                this.props.navigation.navigate('Home');
+                console.log('deveria navegar');      
+              }).catch(() => {
+                console.log('erro ao setar a senha');
+              })
+            } else {
+                console.log('senha tava null');      
+            }
+            
+              console.log('setou email');
+          }).catch(() => {
+              console.log('erro ao setar email');
+          })
+      } else {
+        console.log('not auth');
       }
     }
   }
@@ -449,6 +460,7 @@ const mapStateToProps = (state) => ({
   error: state.auth.error,
   signup_error_message: state.auth.signup_error_message,
   isFetching: state.auth.isFetching,
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, {
