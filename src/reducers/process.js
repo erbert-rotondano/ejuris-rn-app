@@ -1,8 +1,10 @@
 import {
+	PROCESS_FETCH_REQUEST,
 	PROCESS_FETCH_SUCCESS,
 	PROCESS_FETCH_FAIL,
-	PROCESS_FETCH_REQUEST
-} from '../actions/actionTypes';
+	PROCESS_ADD_REQUEST,
+	PROCESS_ADD_SUCCESS,
+	PROCESS_ADD_FAIL } from '../actions/actionTypes';
 
 const initialState = {
 	userprocess: [],
@@ -25,6 +27,12 @@ const reducer = (state = initialState, action) => {
       		return { ...state, loading: false, loaded: false };
       	case PROCESS_FETCH_REQUEST:
       		return { ...state, loading: true, loaded: false };
+		case ADD_PROCESS_SUCCESS:
+			return { ...state, loading: false, loaded: true };
+		case ADD_PROCESS_FAIL:
+			return { ...state, loading: false, loaded: false };
+		case ADD_PROCESS_REQUEST:
+			return { ...state, loading: true, loaded: false };      		
 		default:
 			return state;
 	}
