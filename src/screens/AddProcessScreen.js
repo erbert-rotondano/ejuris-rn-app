@@ -2,8 +2,23 @@ import React, { Component } from 'react';
 import { View, TextInput } from 'react-native';
 import { List, ListItem, Text, Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import {APP_COLOR, DEVICE_WIDTH} from '../config/constants';
+import {
+  addProcess,
+} from '../actions/process';
+import { connect } from 'react-redux';
 
 class AddProcessScreen extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      unidadeJudicial: '',
+      cidade: '',
+      numero: '',
+      protocolo: '',
+      observacao: '',
+      classeDiligencia: ''
+    }
+  }
   render(){
     return(
         <View>
@@ -16,7 +31,7 @@ class AddProcessScreen extends Component {
                 autoCorrect={false}
                 placeholderTextColor='#AAAAAA'
                 underlineColorAndroid='transparent'
-                onChangeText={() => console.log('mudou texto')}/>
+                onChangeText={(value) => this.setState({cidade: value})}/>
 
           <TextInput
                 style={styles.input}
@@ -26,7 +41,7 @@ class AddProcessScreen extends Component {
                 autoCorrect={false}
                 placeholderTextColor='#AAAAAA'
                 underlineColorAndroid='transparent'
-                onChangeText={() => console.log('mudou texto')}/>
+                onChangeText={(value) => this.setState({unidadeJudicial: value})}/>
 
           <TextInput
                 style={styles.input}
@@ -36,7 +51,16 @@ class AddProcessScreen extends Component {
                 autoCorrect={false}
                 placeholderTextColor='#AAAAAA'
                 underlineColorAndroid='transparent'
-                onChangeText={() => console.log('mudou texto')}/>
+                onChangeText={(value) => this.setState({numero: value})}/>
+          <TextInput
+                style={styles.input}
+                placeholder='Número do Protocolo: '
+                autoCapitalize={'none'}
+                returnKeyType={'done'}
+                autoCorrect={false}
+                placeholderTextColor='#AAAAAA'
+                underlineColorAndroid='transparent'
+                onChangeText={(value) => this.setState({protocolo: value})}/>
 
           <TextInput
                 style={styles.input}
@@ -46,7 +70,7 @@ class AddProcessScreen extends Component {
                 autoCorrect={false}
                 placeholderTextColor='#AAAAAA'
                 underlineColorAndroid='transparent'
-                onChangeText={() => console.log('mudou texto')}/>
+                onChangeText={(value) => this.setState({classeDiligencia: value})}/>
 
           <TextInput
                 style={styles.input}
@@ -56,17 +80,22 @@ class AddProcessScreen extends Component {
                 autoCorrect={false}
                 placeholderTextColor='#AAAAAA'
                 underlineColorAndroid='transparent'
-                onChangeText={() => console.log('mudou texto')}/>
+                onChangeText={(value) => this.setState({observacao: value})}/>
 			 
           <Button
                 style={{marginTop: 15}} 
                 raised
                 backgroundColor={APP_COLOR}
-                onPress={() => this.props.navigation.navigate('Home')}
+                onPress={() => this.handleButtonPress()}
                 title='Submeter' />
        	</View>
     );
   }
+}
+const handleButtonPress = () => {
+  const {numero, protocolo, classeDiligencia, observacao, cidade} = this.state
+  this.addProcess(numero, protocolo, classeDiligencia, observacao, cidade, 'a', this.props.user_id, 1);
+  // numero, protocolo, classe_diligencia, obs, cidade, obs_unidade, id_user, id_unidade
 }
 const styles = {
   input: {
@@ -83,4 +112,13 @@ const styles = {
     },
 }
 
-export default AddProcessScreen;
+
+const mapStateToProps = (state) => ({
+  email: state.auth.email,
+  password: state.auth.password,
+  user_id: state.auth.user_id
+});
+
+export default connect(mapStateToProps, {
+  addProcess
+})(AddProcessScreen);

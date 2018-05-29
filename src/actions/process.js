@@ -80,11 +80,11 @@ const processFetchFail = () => ({
 	type: 'PROCESS_FETCH_FAIL'
 });
 const addProcessRequest = () => ({
-	type: 'ADD_PROCESS_REQUEST'
+	type: PROCESS_ADD_REQUEST
 });
 const addProcessSuccess = () => ({
-	type: 'ADD_PROCESS_SUCCESS',
+	type: PROCESS_ADD_SUCCESS,
 });
 const addProcessFail = () => ({
-	type: 'ADD_PROCESS_FAIL'
+	type: PROCESS_ADD_FAIL
 });

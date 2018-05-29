@@ -265,11 +265,19 @@ class SignupForm extends Component {
       if(isAuthenticated == true) {    
         console.log('should auth', this.props.email);
           AsyncStorage.setItem('@email:key', this.props.email).then(() => {
+            console.log(this.props.email);
             if(this.props.password){
               const passwordEncrypted = md5.hex_md5( this.props.password + '' );
+              console.log('setando senha...: ', passwordEncrypted);
               AsyncStorage.setItem('@password:key', passwordEncrypted).then(() => {
-                this.props.navigation.navigate('Home');
-                console.log('deveria navegar');      
+                console.log('setando id...: ', this.props.user_id);
+                AsyncStorage.setItem('@user_id:key', this.props.user_id+'').then(() => {
+                  console.log('navegando..');
+                  this.props.navigation.navigate('Home');
+                  console.log('deveria navegar');  
+                }).catch((error) => {
+                  console.log('erro ao setar o id: ', error);
+                })                    
               }).catch(() => {
                 console.log('erro ao setar a senha');
               })
@@ -452,6 +460,7 @@ class SignupForm extends Component {
 const mapStateToProps = (state) => ({
   email: state.auth.email,
   password: state.auth.password,
+  user_id: state.auth.user_id,
   password_confirmation: state.auth.password_confirmation,
   username: state.auth.username,
   phone: state.auth.phone,

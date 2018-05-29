@@ -27,11 +27,11 @@ const reducer = (state = initialState, action) => {
       		return { ...state, loading: false, loaded: false };
       	case PROCESS_FETCH_REQUEST:
       		return { ...state, loading: true, loaded: false };
-		case ADD_PROCESS_SUCCESS:
+		case PROCESS_ADD_SUCCESS:
 			return { ...state, loading: false, loaded: true };
-		case ADD_PROCESS_FAIL:
+		case PROCESS_ADD_FAIL:
 			return { ...state, loading: false, loaded: false };
-		case ADD_PROCESS_REQUEST:
+		case PROCESS_ADD_REQUEST:
 			return { ...state, loading: true, loaded: false };      		
 		default:
 			return state;

@@ -135,7 +135,7 @@ export const userSignup = ( {email, password, password_confirmation, username, p
 		axios.post(`${API_URL}cadastro_usuario`, postData, config)
 		.then(response => {
 			if(response.data.success == 1){
-				dispatch(signupSuccess(response.data.objeto[0]));
+				dispatch(signupSuccess(response.data));
 				console.log(response.data);
 				console.log(response.data.objeto[0]);
 
@@ -197,7 +197,8 @@ export const loginRequest = () => ({
 export const loginSuccess = (data) => ({
 	type: LOGIN_SUCCESS,
 	email: data.email,
-	password: data.password
+	password: data.password,
+	user_id: data.id
 });
 export const loginFailed = (status) => ({
 	type: LOGIN_FAILED,
@@ -209,8 +210,9 @@ export const signupRequest = () => ({
 });
 export const signupSuccess = (data) => ({
 	type: SIGNUP_SUCCESS,
-	email: data.email,
-	password: data.senha
+	email: data.objeto[0].email,
+	password: data.objeto[0].senha,
+	user_id: data.id_user
 });
 export const signupFailed = (error_status, error_message) => ({
 	type: SIGNUP_FAILED,

@@ -133,25 +133,24 @@ class LoginForm extends Component {
       console.log(this.props.error_message);
     } else {
       if(isAuthenticated == true) {    
-        console.log('should auth');
+        console.log('should auth', this.props.email);
           AsyncStorage.setItem('@email:key', this.props.email).then(() => {
-            console.log('setando email');
-            AsyncStorage.setItem('@password:key', this.props.password).then(() => {
-              if(this.props.password){
-                this.props.navigation.navigate('Home');
-                console.log('deveria navegar');      
-              } else {
-                console.log('senha tava null');      
-              }
+              AsyncStorage.setItem('@password:key', this.props.password).then(() => {
+                AsyncStorage.setItem('@user_id:key', this.props.user_id).then(() => {
+                  this.props.navigation.navigate('Home');
+                  console.log('deveria navegar');  
+                }).catch(() => {
+                  console.log('erro ao setar o id');
+                })                    
               }).catch(() => {
                 console.log('erro ao setar a senha');
-              })
+              })            
               console.log('setou email');
           }).catch(() => {
               console.log('erro ao setar email');
           })
       } else {
-        console.log('not auth');
+      console.log('not auth');
       }
     }
   }
@@ -207,6 +206,7 @@ const mapStateToProps = (state) => ({
   error_message: state.auth.error_message,
   isFetching: state.auth.isFetching,
   isAuthenticated: state.auth.isAuthenticated,
+  user_id: state.auth.user_id
 });
 
 export default connect(mapStateToProps, { emailChanged, passwordChanged, userLogin })(LoginForm);
