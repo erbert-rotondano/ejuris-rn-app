@@ -50,12 +50,12 @@ export const addProcess = (numero, protocolo, classe_diligencia, obs, cidade, ob
 		postData.append("classe_diligencia", classe_diligencia);
 		postData.append("observacao", obs);
 		postData.append("cidade", cidade);
-		postData.append("observacao_unidade", observacao_unidade);
+		postData.append("observacao_unidade", obs_unidade);
 		postData.append("id_user", id_user);
 		postData.append("id_unidade", id_unidade);
 
 
-		axios.post(`${API_URL}app_cadastro`, postData, config)
+		axios.post(`${API_URL}cadastro`, postData, config)
 		  .then(function (response) {
 		  	dispatch(addProcessSuccess());
 		  	console.log(response.data);

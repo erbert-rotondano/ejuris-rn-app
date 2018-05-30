@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput } from 'react-native';
+import { View, TextInput, AsyncStorage } from 'react-native';
 import { List, ListItem, Text, Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import {APP_COLOR, DEVICE_WIDTH} from '../config/constants';
 import {
@@ -91,12 +91,18 @@ class AddProcessScreen extends Component {
        	</View>
     );
   }
+  handleButtonPress(){
+    const {numero, protocolo, classeDiligencia, observacao, cidade} = this.state;
+    AsyncStorage.getItem('@user_id:key').then((id) => {
+      this.props.addProcess(numero, protocolo, classeDiligencia, observacao, cidade, 'a', id, 1);
+    }).catch((error) => {
+      console.log(error);
+    })
+    
+    // numero, protocolo, classe_diligencia, obs, cidade, obs_unidade, id_user, id_unidade
+  }
 }
-const handleButtonPress = () => {
-  const {numero, protocolo, classeDiligencia, observacao, cidade} = this.state
-  this.addProcess(numero, protocolo, classeDiligencia, observacao, cidade, 'a', this.props.user_id, 1);
-  // numero, protocolo, classe_diligencia, obs, cidade, obs_unidade, id_user, id_unidade
-}
+
 const styles = {
   input: {
       backgroundColor: 'rgba(255,255,255,0.4)',
