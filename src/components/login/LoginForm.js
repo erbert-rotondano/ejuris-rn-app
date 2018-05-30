@@ -113,15 +113,14 @@ class LoginForm extends Component {
   _loadAuthentication_token = async () => {
     AsyncStorage.getItem('@email:key').then((email) => {
       AsyncStorage.getItem('@password:key').then((password) => {
-        if(email && password && this.props.isAuthenticated){
-          this.props.navigation.navigate('Home');
-        }
-      }).catch((error) => {
-        console.log('não achou senha:', error);
-      });
-    }).catch((error) => {
-      console.log('não achou email:', error);
-    });
+        AsyncStorage.getItem('@user_id:key').then((user_id) => {
+              if(email && password && user_id){
+                console.log(email, password, user_id);
+                this.props.navigation.navigate('Home');
+              }
+            }).catch((error) => { console.log('não achou id:', error)});
+      }).catch((error) => {console.log('não achou senha:', error)});
+    }).catch((error) => { console.log('não achou email:', error)});
   }
 
   _setAuthentication_token = async () => {
