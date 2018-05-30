@@ -184,8 +184,16 @@ class SignupForm extends Component {
                 { cancelable: false }
               )
             } else {
-              const passwordEncrypted = md5.hex_md5( password + '' );
-              this.props.userSignup({ email, passwordEncrypted, password_confirmation, username, phoneArea, phone, address, competence});
+              if(password != '' && password != 'undefined'){
+                const passwordEncrypted = md5.hex_md5( password + '' );
+                this.props.userSignup({ email, password: passwordEncrypted, password_confirmation, username, phoneArea, phone, address, competence});  
+              } else {
+                Alert.alert(
+                  'Senha Inválida', 'Houve algum problema, tente novamente com outra senha',
+                  [ {text: 'OK', onPress: () => console.log('OK Pressed')}, ],
+                  { cancelable: false }
+                )
+              }           
             }
 
           } else {
@@ -268,8 +276,8 @@ class SignupForm extends Component {
             console.log(this.props.email);
             if(this.props.password){
               const passwordEncrypted = md5.hex_md5( this.props.password + '' );
-              console.log('setando senha...: ', passwordEncrypted);
-              AsyncStorage.setItem('@password:key', passwordEncrypted).then(() => {
+              console.log('setando senha...: ', this.props.password);
+              AsyncStorage.setItem('@password:key', this.props.password).then(() => {
                 console.log('setando id...: ', this.props.user_id);
                 AsyncStorage.setItem('@user_id:key', this.props.user_id+'').then(() => {
                   console.log('navegando..');

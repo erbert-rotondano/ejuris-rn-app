@@ -125,8 +125,7 @@ export const userSignup = ( {email, password, password_confirmation, username, p
 		};
 		var postData = new FormData();
 		postData.append("email", email);
-		const passwordEncrypted = md5.hex_md5( password + '' );
-		postData.append("senha", passwordEncrypted);
+		postData.append("senha", password);
 		postData.append("nome", username);
 		postData.append("competencia", competence);
 		postData.append("telefone", '(' + phoneArea + ')' + phone);
