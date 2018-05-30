@@ -36,23 +36,34 @@ class Home extends Component {
 				 </View>
 			 </View>
 			 <View style={styles.secondSection}>
-			 <FormLabel>Consultar Atendimentos:</FormLabel>
-				<TextInput
-		            style={styles.input}
-  					placeholder='Número de Protocolo: '
-  					autoCapitalize={'none'}
-		            returnKeyType={'done'}
-  					autoCorrect={false}
-		            placeholderTextColor='#AAAAAA'
-		            underlineColorAndroid='transparent'
-		            onChangeText={() => console.log('mudou texto')}/>
+			 	<FormLabel>Consultar Atendimentos:</FormLabel>
+			 	<View style={styles.searchContainer}>
+			 		<View style={{flex: 2}}>
+						<TextInput
+				            style={styles.input}
+		  					placeholder='Número de Protocolo: '
+		  					autoCapitalize={'none'}
+				            returnKeyType={'done'}
+		  					autoCorrect={false}
+				            placeholderTextColor='#AAAAAA'
+				            underlineColorAndroid='transparent'
+				            onChangeText={() => console.log('mudou texto')}/>
+		            </View>
+		            <View style={{height: 20, paddingTop: 13}}>
+				        <Button style={{flex: 1}}
+							  raised
+							  backgroundColor={APP_COLOR}
+							  onPress={() => console.log('buscar')}
+							  title='Buscar' />
+					</View>
+			 	</View>
 			 </View>
 			 <View style={styles.thirdSection}>
-			  <Button
-						  raised
-						  backgroundColor={APP_COLOR}
-						  onPress={() => this.props.navigation.navigate('AddProcess')}
-						  title='Novo Atendimento' />
+	  			<Button
+				  raised
+				  backgroundColor={APP_COLOR}
+				  onPress={() => this.props.navigation.navigate('AddProcess')}
+				  title='Novo Atendimento' />
 			 </View>
 
     	</View>    	
@@ -82,14 +93,21 @@ const styles = {
 		width: 170
 	},
 	secondSection:{
-		marginTop: 30
+		marginTop: 30,
+		flex: 1,
+		flexDirection: 'column'
+	},
+	searchContainer:{
+		flexDirection: 'row',
+		flex: 1
 	},
 	thirdSection: {
+		flex: 3,
 		marginTop: 30
 	},
 	input: {
 	    backgroundColor: 'rgba(255,255,255,0.4)',
-	    width: DEVICE_WIDTH - 50,
+	    width: DEVICE_WIDTH - 125,
 	    height: 40,
 	    paddingLeft: 10,
 	    marginHorizontal: 20,
