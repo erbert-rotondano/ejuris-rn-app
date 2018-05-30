@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, AsyncStorage } from 'react-native';
+import { View, TextInput, AsyncStorage, Alert } from 'react-native';
 import { List, ListItem, Text, Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import {APP_COLOR, DEVICE_WIDTH} from '../config/constants';
 import {
@@ -17,6 +17,16 @@ class AddProcessScreen extends Component {
       protocolo: '',
       observacao: '',
       classeDiligencia: ''
+    }
+  }
+  componentDidUpdate(){
+    if(this.props.loaded){
+      Alert.alert(
+          'Processo cadastrado com sucesso',
+          [ {text: 'OK'}, ],
+          { cancelable: false }
+        );
+      this.props.navigation.navigate('Home');
     }
   }
   render(){
@@ -120,9 +130,8 @@ const styles = {
 
 
 const mapStateToProps = (state) => ({
-  email: state.auth.email,
-  password: state.auth.password,
-  user_id: state.auth.user_id
+  loading: state.userprocess.loading,
+  loaded: state.userprocess.loaded,
 });
 
 export default connect(mapStateToProps, {
