@@ -43,7 +43,7 @@ class ProcessList extends Component {
 	                  titleStyle={{ fontSize: 18 }}
                       onPress={ () => this.props.navigation.navigate('ProcessDetail', {item: l}) }
 	                  hideChevron
-	                  key={l.id}
+	                  key={l.id_process}
 	                  title={'Processo: ' +l.numero}
 	                  subtitle={'Protocolo: ' + l.protocolo}
 	                />
