@@ -4,7 +4,10 @@ import {
 	PROCESS_FETCH_FAIL,
 	PROCESS_ADD_REQUEST,
 	PROCESS_ADD_SUCCESS,
-	PROCESS_ADD_FAIL } from '../actions/actionTypes';
+	PROCESS_ADD_FAIL,
+	PROCESS_SEARCH_REQUEST,
+	PROCESS_SEARCH_SUCCESS,
+	PROCESS_SEARCH_FAIL } from '../actions/actionTypes';
 
 import {API_URL} from '../config/constants'
 import axios from 'axios';
@@ -68,7 +71,33 @@ export const addProcess = (numero, protocolo, classe_diligencia, obs, cidade, ob
 	}
 }
 
+export const processSearch = (mail, pwd, searchterm) => {
+	return dispatch => {
+		dispatch(processFetchRequest());
+		const config = {
+		  headers: {
+			    "Content-Type": "application/x-www-form-urlencoded",
+			  }
+		};
+		var postData = new FormData();
+		postData.append("email", mail);
+		postData.append("senha", pwd);
+		postData.append("searchterm", searchterm);
 
+		// axios.post(`${API_URL}url`, postData, config)
+		axios.post(`${API_URL}login`, postData, config)
+		  .then(function (response) {
+		  	dispatch(processFetchSuccess(response.data.processes));
+		  	console.log(response.data);
+		  	console.log(mail, pwd);
+		  })
+		  .catch(function (error) {
+		  	dispatch(processFetchFail());
+		    console.log(error);
+		  });
+				  
+	}
+}
 const processFetchRequest = () => ({
 	type: 'PROCESS_FETCH_REQUEST'
 });
@@ -87,4 +116,14 @@ const addProcessSuccess = () => ({
 });
 const addProcessFail = () => ({
 	type: PROCESS_ADD_FAIL
+});
+const searchProcessRequest = () => ({
+	type: PROCESS_SEARCH_REQUEST
+});
+const searchProcessSuccess = (data) => ({
+	type: PROCESS_SEARCH_SUCCESS,
+	payload: data
+});
+const searchProcessFail = () => ({
+	type: PROCESS_SEARCH_FAIL
 });

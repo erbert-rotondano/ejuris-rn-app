@@ -6,6 +6,7 @@ import TestScreen from '../screens/TestScreen';
 import AddProcessScreen from '../screens/AddProcessScreen';
 import Login from '../screens/Login';
 import Signup from '../screens/Signup';
+import SearchResult from '../screens/SearchResult';
 import ProcessDetail from '../screens/ProcessDetail';
 import ProcessList from '../screens/ProcessList';
 
@@ -30,11 +31,15 @@ export const Navigator = new StackNavigator({
   	navigationOptions: ({ navigation }) => ({
       drawerLabel: 'Home',
       title: 'Balcão Virtual',
+      gesturesEnabled: false,
       headerStyle: {
         backgroundColor: 'rgba(54,57,62,1)',
       },
+      // header: {
+      //   left: null
+      // },
       headerTintColor: '#fff',
-      // headerLeft: back(navigation)
+      headerLeft: null
     })
   },
   TestScreen: { 
@@ -90,6 +95,18 @@ export const Navigator = new StackNavigator({
     navigationOptions: ({ navigation }) => ({
       drawerLabel: 'AddProcessScreen',
       title: 'Cadastrar novo Atendimento',
+      headerStyle: {
+        backgroundColor: 'rgba(54,57,62,1)',
+      },
+      headerTintColor: '#fff',
+      // headerLeft: back(navigation)
+    })
+  },
+  SearchResult: { 
+    screen: SearchResult ,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'SearchProcess',
+      title: 'Resultado de busca',
       headerStyle: {
         backgroundColor: 'rgba(54,57,62,1)',
       },

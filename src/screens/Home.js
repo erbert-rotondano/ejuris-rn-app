@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, TextInput, AsyncStorage } from 'react-native';
+import { View, ScrollView, TextInput, AsyncStorage, BackHandler } from 'react-native';
 import { List, ListItem, Text, Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import {APP_COLOR, user_data, DEVICE_WIDTH} from '../config/constants';
 import {processFetch} from '../actions/process';
@@ -13,8 +13,40 @@ class Home extends Component {
 		AsyncStorage.getItem('@email:key').then((pwd) => {
 			console.log('email: ', pwd)
 		});
+		
+		// this._getCurrentRouteName();
+	}
+	componentDidMount(){
+		BackHandler.addEventListener('hardwareBackPress', () => {
+			if (this.props.navigation.state.routeName === 'Home') {
+			    // this.goBack();
+			    return true;
+			  } else {
+			  	return false;	
+			  }
+			  
+			console.log(this.props.navigation.state.routeName);
+		});
+	}
+	handleEvent(props) {
+		  // this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
+		  // Typically you would use the navigator here to go to the last state.
+
+	  
 	}
 	
+	_getCurrentRouteName() {
+
+	    if (this.props.navigation.state.hasOwnProperty('index')) {
+	        this._getCurrentRouteName(this.props.navigation.state.routes[this.props.navigation.state.index])
+	    } else {
+	        console.log("Current Route Name:", this.props.navigation.state.routeName)
+	       	// can then save this to the state (I used redux)
+	        // store.dispatch(setCurrentRouteName(this.props.navigation.state.routeName))
+	        return this.props.navigation.state.routeName;
+	    }
+
+	}
   	render(){
     return(
     	<View style={styles.generalContainer}>

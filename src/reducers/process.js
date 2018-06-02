@@ -32,7 +32,13 @@ const reducer = (state = initialState, action) => {
 		case PROCESS_ADD_FAIL:
 			return { ...state, loading: false, loaded: false };
 		case PROCESS_ADD_REQUEST:
-			return { ...state, loading: true, loaded: false };      		
+			return { ...state, loading: true, loaded: false };      
+		case PROCESS_SEARCH_SUCCESS:
+			return { ...state, userprocess: action.payload, loading: false, loaded: true };
+		case PROCESS_SEARCH_FAIL:
+			return { ...state, loading: false, loaded: false };
+		case PROCESS_SEARCH_REQUEST:
+			return { ...state, loading: true, loaded: false };		
 		default:
 			return state;
 	}
