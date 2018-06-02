@@ -4,7 +4,10 @@ import {
 	PROCESS_FETCH_FAIL,
 	PROCESS_ADD_REQUEST,
 	PROCESS_ADD_SUCCESS,
-	PROCESS_ADD_FAIL } from '../actions/actionTypes';
+	PROCESS_ADD_FAIL,
+	PROCESS_SEARCH_REQUEST,
+	PROCESS_SEARCH_SUCCESS,
+	PROCESS_SEARCH_FAIL } from '../actions/actionTypes';
 
 const initialState = {
 	userprocess: [],
