@@ -71,7 +71,7 @@ export const addProcess = (numero, protocolo, classe_diligencia, obs, cidade, ob
 	}
 }
 
-export const processSearch = (mail, pwd, searchterm) => {
+export const processSearch = (id_user, searchterm) => {
 	return dispatch => {
 		dispatch(processFetchRequest());
 		const config = {
@@ -80,9 +80,9 @@ export const processSearch = (mail, pwd, searchterm) => {
 			  }
 		};
 		var postData = new FormData();
-		postData.append("email", mail);
-		postData.append("senha", pwd);
-		postData.append("searchterm", searchterm);
+		postData.append("id_usuario", id_user);
+		postData.append("numero_processo", searchterm);
+		postData.append("protocolo", searchterm);
 
 		// axios.post(`${API_URL}url`, postData, config)
 		axios.post(`${API_URL}login`, postData, config)

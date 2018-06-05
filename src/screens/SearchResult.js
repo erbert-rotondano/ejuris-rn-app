@@ -7,14 +7,11 @@ import { connect } from 'react-redux';
 
 class SearchResult extends Component {
 componentWillMount(){
-		AsyncStorage.getItem('@email:key').then((email) => {
-			AsyncStorage.getItem('@password:key').then((password) => {
-				this.props.processSearch(email, password, this.props.navigation.state.params.searchterm);	
+
+			AsyncStorage.getItem('@user_id:key').then((user_id) => {
+				this.props.processSearch(user_id, this.props.navigation.state.params.searchterm);	
 			}).catch(() => {
-				console.log('erro ao pegar a senha');
-			})
-		}).catch(() => {
-				console.log('erro ao pegar o email');
+				console.log('erro ao pegar o id');
 			})
 			
 		
@@ -40,7 +37,7 @@ componentWillMount(){
 	                <ListItem
 	                  containerStyle={{borderBottomColor: '#EEE'}}
 	                  titleStyle={{ fontSize: 18 }}
-                      onPress={ () => this.props.navigation.navigate('ProcessDetail', {item: l}) }
+                    onPress={ () => this.props.navigation.navigate('ProcessDetail', {item: l}) }
 	                  hideChevron
 	                  key={l.id_process}
 	                  title={'Processo: ' +l.numero}

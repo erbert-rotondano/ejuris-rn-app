@@ -73,19 +73,19 @@ class Home extends Component {
 			 		<View style={{flex: 2}}>
 						<TextInput
 				            style={styles.input}
-		  					placeholder='Número de Protocolo: '
+		  					placeholder='Número de Protocolo/Processo: '
 		  					autoCapitalize={'none'}
 				            returnKeyType={'done'}
 		  					autoCorrect={false}
 				            placeholderTextColor='#AAAAAA'
 				            underlineColorAndroid='transparent'
-				            onChangeText={() => console.log('mudou texto')}/>
+				            onChangeText={(value) => this.setState({searchterm: value})}/>
 		            </View>
 		            <View style={{height: 20, paddingTop: 13}}>
 				        <Button style={{flex: 1}}
 							  raised
 							  backgroundColor={APP_COLOR}
-							  onPress={() => console.log('buscar')}
+							  onPress={() => this.props.navigation.navigate('SearchResult', {searchterm: this.state.searchterm})}
 							  title='Buscar' />
 					</View>
 			 	</View>
