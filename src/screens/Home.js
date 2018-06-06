@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, ScrollView, TextInput, AsyncStorage, BackHandler } from 'react-native';
+import { View, ScrollView, TextInput, AsyncStorage, BackHandler, KeyboardAvoidingView } from 'react-native';
 import { List, ListItem, Text, Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import {APP_COLOR, user_data, DEVICE_WIDTH} from '../config/constants';
 import {processFetch} from '../actions/process';
@@ -49,7 +49,7 @@ class Home extends Component {
 	}
   	render(){
     return(
-    	<View style={styles.generalContainer}>
+    	<KeyboardAvoidingView behavior="position" style={styles.generalContainer}>
     		<View style={styles.firstSection}>
 	    		<View style={styles.textContainer}>
 	    			<Text style={styles.titleText}>Meus Atendimentos</Text>
@@ -98,7 +98,7 @@ class Home extends Component {
 				  title='Novo Atendimento' />
 			 </View>
 
-    	</View>    	
+    	</KeyboardAvoidingView>    	
     );
   }
   
@@ -131,11 +131,11 @@ const styles = {
 	},
 	searchContainer:{
 		flexDirection: 'row',
-		flex: 1
+		flex: 1,
+		marginTop: 25
 	},
 	thirdSection: {
-		flex: 3,
-		marginTop: 30
+		marginTop: 100
 	},
 	input: {
 	    backgroundColor: 'rgba(255,255,255,0.4)',

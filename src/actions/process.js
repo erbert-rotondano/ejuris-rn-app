@@ -85,7 +85,7 @@ export const processSearch = (id_user, searchterm) => {
 		postData.append("protocolo", searchterm);
 
 		// axios.post(`${API_URL}url`, postData, config)
-		axios.post(`${API_URL}login`, postData, config)
+		axios.post(`${API_URL}busca_processo`, postData, config)
 		  .then(function (response) {
 		  	dispatch(processFetchSuccess(response.data.processes));
 		  	console.log(response.data);

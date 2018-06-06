@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, AsyncStorage, Alert } from 'react-native';
+import { View, TextInput, AsyncStorage, Alert, KeyboardAvoidingView } from 'react-native';
 import { List, ListItem, Text, Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import {APP_COLOR, DEVICE_WIDTH} from '../config/constants';
 import {
@@ -16,77 +16,99 @@ class AddProcessScreen extends Component {
       numero: '',
       protocolo: '',
       observacao: '',
-      classeDiligencia: ''
+      classeDiligencia: '',
+      id_user: ''
     }
+  }
+  componentWillMount(){
+
+    AsyncStorage.getItem('@user_id:key').then((id) => {
+      this.setState({id_user: id})
+    }).catch((error) => {
+      console.log(error);
+    })
   }
   componentDidUpdate(){
     if(this.props.loaded){
-      Alert.alert(
-          'Processo cadastrado com sucesso',
-          [ {text: 'OK'}, ],
-          { cancelable: false }
-        );
-      this.props.navigation.navigate('Home');
+       Alert.alert(
+        'Processo cadastrado com sucesso',
+        '',
+        [
+          {text: 'OK', onPress: () => this.props.navigation.navigate('Home')},
+        ],
+        { cancelable: true }
+      )
     }
   }
   render(){
     return(
-        <View>
+        <KeyboardAvoidingView behavior="position">
         	<Text style={{fontSize: 15, marginLeft: 15, marginTop: 20}}> Informações do Atendimento </Text>
           <TextInput
                 style={styles.input}
                 placeholder='Cidade: '
                 autoCapitalize={'none'}
-                returnKeyType={'done'}
+                returnKeyType={'next'}
+                ref={(input) => this.cidade = input}
                 autoCorrect={false}
                 placeholderTextColor='#AAAAAA'
                 underlineColorAndroid='transparent'
-                onChangeText={(value) => this.setState({cidade: value})}/>
+                onChangeText={(value) => this.setState({cidade: value})}
+                onSubmitEditing={() => this.unidadeJudicial.focus()} />
 
           <TextInput
                 style={styles.input}
                 placeholder='Unidade Judicial: '
                 autoCapitalize={'none'}
-                returnKeyType={'done'}
+                returnKeyType={'next'}
+                ref={(input) => this.unidadeJudicial = input}
                 autoCorrect={false}
                 placeholderTextColor='#AAAAAA'
                 underlineColorAndroid='transparent'
-                onChangeText={(value) => this.setState({unidadeJudicial: value})}/>
+                onChangeText={(value) => this.setState({unidadeJudicial: value})}
+                onSubmitEditing={() => this.numero.focus()} />
 
           <TextInput
                 style={styles.input}
                 placeholder='Número do Processo: '
                 autoCapitalize={'none'}
-                returnKeyType={'done'}
+                returnKeyType={'next'}
+                ref={(input) => this.numero = input}
                 autoCorrect={false}
                 placeholderTextColor='#AAAAAA'
                 underlineColorAndroid='transparent'
-                onChangeText={(value) => this.setState({numero: value})}/>
+                onChangeText={(value) => this.setState({numero: value})}
+                onSubmitEditing={() => this.protocolo.focus()} />
           <TextInput
                 style={styles.input}
                 placeholder='Número do Protocolo: '
                 autoCapitalize={'none'}
-                returnKeyType={'done'}
+                returnKeyType={'next'}
+                ref={(input) => this.protocolo = input}
                 autoCorrect={false}
                 placeholderTextColor='#AAAAAA'
                 underlineColorAndroid='transparent'
-                onChangeText={(value) => this.setState({protocolo: value})}/>
+                onChangeText={(value) => this.setState({protocolo: value})}
+                onSubmitEditing={() => this.classeDiligencia.focus()} />
 
           <TextInput
                 style={styles.input}
                 placeholder='Classe de Diligência: '
                 autoCapitalize={'none'}
-                returnKeyType={'done'}
+                returnKeyType={'next'}
+                ref={(input) => this.classeDiligencia = input}
                 autoCorrect={false}
                 placeholderTextColor='#AAAAAA'
                 underlineColorAndroid='transparent'
-                onChangeText={(value) => this.setState({classeDiligencia: value})}/>
+                onChangeText={(value) => this.setState({classeDiligencia: value})}
+                onSubmitEditing={() => this.observacao.focus()} />
 
           <TextInput
                 style={styles.input}
                 placeholder='Observação: '
                 autoCapitalize={'none'}
                 returnKeyType={'done'}
+                ref={(input) => this.observacao = input}
                 autoCorrect={false}
                 placeholderTextColor='#AAAAAA'
                 underlineColorAndroid='transparent'
@@ -96,20 +118,14 @@ class AddProcessScreen extends Component {
                 style={{marginTop: 15}} 
                 raised
                 backgroundColor={APP_COLOR}
-                onPress={() => this.handleButtonPress()}
+                onPress={() => {this.handleButtonPress()}}
                 title='Submeter' />
-       	</View>
+       	</KeyboardAvoidingView>
     );
   }
   handleButtonPress(){
     const {numero, protocolo, classeDiligencia, observacao, cidade} = this.state;
-    AsyncStorage.getItem('@user_id:key').then((id) => {
-      this.props.addProcess(numero, protocolo, classeDiligencia, observacao, cidade, 'a', id, 1);
-    }).catch((error) => {
-      console.log(error);
-    })
-    
-    // numero, protocolo, classe_diligencia, obs, cidade, obs_unidade, id_user, id_unidade
+      this.props.addProcess(numero, protocolo, classeDiligencia, observacao, cidade, 'a', this.state.id_user, 1);    
   }
 }
 
