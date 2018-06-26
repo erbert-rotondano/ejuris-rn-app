@@ -10,7 +10,7 @@ class ProcessList extends Component {
 	componentWillMount(){
 		AsyncStorage.getItem('@email:key').then((email) => {
 			AsyncStorage.getItem('@password:key').then((password) => {
-				this.props.processFetch(email, password);	
+          this.props.processFetch(email, password, this.props.navigation.state.params.typeToFetch);   
 			}).catch(() => {
 				console.log('erro ao pegar a senha');
 			})

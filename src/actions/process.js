@@ -13,7 +13,7 @@ import {API_URL} from '../config/constants'
 import axios from 'axios';
 
 
-export const processFetch = (mail, pwd) => {
+export const processFetch = (mail, pwd, status) => {
 	return dispatch => {
 		dispatch(processFetchRequest());
 		const config = {
@@ -25,6 +25,7 @@ export const processFetch = (mail, pwd) => {
 		postData.append("email", mail);
 		postData.append("senha", pwd);
 		postData.append("request", "processes");
+		postData.append("status", status);
 
 		axios.post(`${API_URL}login`, postData, config)
 		  .then(function (response) {
@@ -81,17 +82,16 @@ export const processSearch = (id_user, searchterm) => {
 		};
 		var postData = new FormData();
 		postData.append("id_usuario", id_user);
+		postData.append("protocolo_processo", searchterm);
 		postData.append("numero_processo", searchterm);
-		postData.append("protocolo", searchterm);
 
 		// axios.post(`${API_URL}url`, postData, config)
 		axios.post(`${API_URL}busca_processo`, postData, config)
-		  .then(function (response) {
+		  .then((response) => {
 		  	dispatch(processFetchSuccess(response.data.processes));
 		  	console.log(response.data);
-		  	console.log(mail, pwd);
 		  })
-		  .catch(function (error) {
+		  .catch((error) => {
 		  	dispatch(processFetchFail());
 		    console.log(error);
 		  });

@@ -58,12 +58,12 @@ class Home extends Component {
 		    		  <Button style={styles.button}
 						  raised
 						  backgroundColor={APP_COLOR}
-						  onPress={() => this.props.navigation.navigate('ProcessList', {typeToFetch: 'open'})}
+						  onPress={() => this.props.navigation.navigate('ProcessList', {typeToFetch: 'pendente'})}
 						  title='Em Aberto' />
 					  <Button style={styles.button}
 						  raised
 						  backgroundColor={APP_COLOR}
-						  onPress={() => this.props.navigation.navigate('ProcessList', {typeToFetch: 'closed'})}
+						  onPress={() => this.props.navigation.navigate('ProcessList', {typeToFetch: 'concluido'})}
 						  title='Concluídos' />
 				 </View>
 			 </View>
