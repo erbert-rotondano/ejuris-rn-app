@@ -80,6 +80,7 @@ export const userLogin = ( {email, password} ) => {
 		postData.append("email", email);
 		postData.append("senha", password);
 		postData.append("request", "processes");
+		postData.append("status", "concluido");
 
 		axios.post(`${API_URL}login`, postData, config)
 		.then(response => {
