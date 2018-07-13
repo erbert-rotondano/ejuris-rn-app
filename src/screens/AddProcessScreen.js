@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import { View, TextInput, AsyncStorage, Alert, KeyboardAvoidingView, Picker } from 'react-native';
 import { List, ListItem, Text, Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
-import {APP_COLOR, DEVICE_WIDTH} from '../config/constants';
+import {APP_COLOR, DEVICE_WIDTH, CIDADES} from '../config/constants';
 import {
   addProcess,
   fetchProcessInfo
 } from '../actions/process';
 import { connect } from 'react-redux';
+
 
 class AddProcessScreen extends Component {
   constructor(props){
@@ -48,18 +49,13 @@ class AddProcessScreen extends Component {
     return(
         <KeyboardAvoidingView behavior="position">
         	<Text style={{fontSize: 15, marginLeft: 15, marginTop: 20}}> Informações do Atendimento </Text>
-          <TextInput
-                style={styles.input}
-                placeholder='Cidade: '
-                autoCapitalize={'none'}
-                returnKeyType={'next'}
-                ref={(input) => this.cidade = input}
-                autoCorrect={false}
-                placeholderTextColor='#AAAAAA'
-                underlineColorAndroid='transparent'
-                onChangeText={(value) => this.setState({cidade: value})}
-                onSubmitEditing={() => this.unidadeJudicial.focus()} />
-
+          <Picker
+            style={styles.pickerStyle}
+            selectedValue={this.state.cidade}
+            onValueChange={(itemValue, itemIndex) => this.setState({cidade: itemValue})}>
+            <Picker.Item label="Selecione uma Cidade" value="empty" key="empty" />
+            {this.renderCityPickItems()}
+          </Picker>
           <Picker
             style={styles.pickerStyle}
             selectedValue={this.state.unidadeJudicial}
@@ -130,6 +126,11 @@ class AddProcessScreen extends Component {
   renderUniPickItems(){
       return this.props.unidadeJudicial.map((unidadeJudicial) => 
         (<Picker.Item label={unidadeJudicial.nome} value={unidadeJudicial.id_unidade} key={unidadeJudicial.id_unidade} />)
+      )
+  }
+  renderCityPickItems(){
+      return CIDADES.map((cidade) => 
+        (<Picker.Item label={cidade} value={cidade} key={cidade} />)
       )
   }
 }
