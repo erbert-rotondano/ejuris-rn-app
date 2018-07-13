@@ -99,7 +99,7 @@ class AddProcessScreen extends Component {
           </Picker>
 
           <TextInput
-                style={styles.input}
+                style={styles.lastInput}
                 placeholder='Observação: '
                 autoCapitalize={'none'}
                 returnKeyType={'done'}
@@ -110,7 +110,7 @@ class AddProcessScreen extends Component {
                 onChangeText={(value) => this.setState({observacao: value})}/>
 			 
           <Button
-                style={{marginTop: 15}} 
+                style={{marginTop: 150}} 
                 raised
                 backgroundColor={APP_COLOR}
                 onPress={() => {this.handleButtonPress()}}
@@ -158,7 +158,20 @@ const styles = {
       borderWidth: 1,
       borderColor: '#252525',
       color: '#555555',
-    }
+    },
+    lastInput: {
+      backgroundColor: 'rgba(255,255,255,0.4)',
+      width: DEVICE_WIDTH - 50,
+      height: 40,
+      paddingLeft: 10,
+      marginHorizontal: 20,
+      borderRadius: 3,
+      borderWidth: 1,
+      borderColor: '#DDDDDD',
+      color: '#555555',
+      marginTop: 15,
+      marginBottom: 15
+    },
 }
 
 
