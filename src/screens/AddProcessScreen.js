@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, TextInput, AsyncStorage, Alert, KeyboardAvoidingView } from 'react-native';
+import { View, TextInput, AsyncStorage, Alert, KeyboardAvoidingView, Picker } from 'react-native';
 import { List, ListItem, Text, Button, FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
 import {APP_COLOR, DEVICE_WIDTH} from '../config/constants';
 import {
@@ -60,17 +60,13 @@ class AddProcessScreen extends Component {
                 onChangeText={(value) => this.setState({cidade: value})}
                 onSubmitEditing={() => this.unidadeJudicial.focus()} />
 
-          <TextInput
-                style={styles.input}
-                placeholder='Unidade Judicial: '
-                autoCapitalize={'none'}
-                returnKeyType={'next'}
-                ref={(input) => this.unidadeJudicial = input}
-                autoCorrect={false}
-                placeholderTextColor='#AAAAAA'
-                underlineColorAndroid='transparent'
-                onChangeText={(value) => this.setState({unidadeJudicial: value})}
-                onSubmitEditing={() => this.numero.focus()} />
+          <Picker
+            style={styles.pickerStyle}
+            selectedValue={this.state.unidadeJudicial}
+            onValueChange={(itemValue, itemIndex) => this.setState({unidadeJudicial: itemValue})}>
+            <Picker.Item label="Selecione uma Unidade Judicial" value="empty" key="empty" />
+            {this.renderUniPickItems()}
+          </Picker>
 
           <TextInput
                 style={styles.input}
@@ -94,18 +90,13 @@ class AddProcessScreen extends Component {
                 underlineColorAndroid='transparent'
                 onChangeText={(value) => this.setState({protocolo: value})}
                 onSubmitEditing={() => this.classeDiligencia.focus()} />
-
-          <TextInput
-                style={styles.input}
-                placeholder='Classe de Diligência: '
-                autoCapitalize={'none'}
-                returnKeyType={'next'}
-                ref={(input) => this.classeDiligencia = input}
-                autoCorrect={false}
-                placeholderTextColor='#AAAAAA'
-                underlineColorAndroid='transparent'
-                onChangeText={(value) => this.setState({classeDiligencia: value})}
-                onSubmitEditing={() => this.observacao.focus()} />
+          <Picker
+            style={styles.pickerStyle}
+            selectedValue={this.state.classeDiligencia}
+            onValueChange={(itemValue, itemIndex) => this.setState({classeDiligencia: itemValue})}>
+            <Picker.Item label="Selecione uma Classe de Diligência" value="empty" key="empty" />
+            {this.renderDilPickItems()}
+          </Picker>
 
           <TextInput
                 style={styles.input}
@@ -131,6 +122,16 @@ class AddProcessScreen extends Component {
     const {numero, protocolo, classeDiligencia, observacao, cidade} = this.state;
       this.props.addProcess(numero, protocolo, classeDiligencia, observacao, cidade, 'a', this.state.id_user, 1);    
   }
+  renderDilPickItems(){
+      return this.props.diligencia.map((dil) => 
+        (<Picker.Item label={dil.descricao} value={dil.id_classe_diligencia} key={dil.id_classe_diligencia} />)
+      )
+  }
+  renderUniPickItems(){
+      return this.props.unidadeJudicial.map((unidadeJudicial) => 
+        (<Picker.Item label={unidadeJudicial.nome} value={unidadeJudicial.id_unidade} key={unidadeJudicial.id_unidade} />)
+      )
+  }
 }
 
 const styles = {
@@ -146,13 +147,24 @@ const styles = {
       color: '#555555',
       marginTop: 15
     },
+    pickerStyle: {
+      width: DEVICE_WIDTH - 50,
+      height: 50,
+      paddingLeft: 10,
+      marginHorizontal: 20,
+      borderRadius: 3,
+      borderWidth: 1,
+      borderColor: '#252525',
+      color: '#555555',
+    }
 }
 
 
 const mapStateToProps = (state) => ({
   loading: state.userprocess.loading,
   loaded: state.userprocess.loaded,
-  info: state.userprocess.info,
+  diligencia: state.userprocess.diligencia,
+  unidadeJudicial: state.userprocess.unidadeJudicial,
   infoLoaded: state.userprocess.infoLoaded,
   infoLoading: state.userprocess.infoLoading,
 });
