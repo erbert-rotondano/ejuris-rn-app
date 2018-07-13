@@ -148,11 +148,13 @@ const styles = {
       marginTop: 15
     },
     pickerStyle: {
+      backgroundColor: 'rgba(255,255,255,0.4)',
       width: DEVICE_WIDTH - 50,
-      height: 50,
+      height: 40,
       paddingLeft: 10,
       marginHorizontal: 20,
       borderRadius: 3,
+      marginTop: 15,
       borderWidth: 1,
       borderColor: '#252525',
       color: '#555555',
