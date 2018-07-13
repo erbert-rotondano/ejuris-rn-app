@@ -7,7 +7,16 @@ import {
 	PROCESS_ADD_FAIL,
 	PROCESS_SEARCH_REQUEST,
 	PROCESS_SEARCH_SUCCESS,
-	PROCESS_SEARCH_FAIL } from '../actions/actionTypes';
+	PROCESS_SEARCH_FAIL,
+	PROCESS_INFO_REQUEST,
+	PROCESS_INFO_SUCCESS,
+	PROCESS_INFO_FAIL,
+	PROCESS_DIL_INFO_REQUEST,
+	PROCESS_DIL_INFO_SUCCESS,
+	PROCESS_DIL_INFO_FAIL,
+	PROCESS_UNI_INFO_REQUEST,
+	PROCESS_UNI_INFO_SUCCESS,
+	PROCESS_UNI_INFO_FAIL } from '../actions/actionTypes';
 
 import {API_URL} from '../config/constants'
 import axios from 'axios';
@@ -98,6 +107,50 @@ export const processSearch = (id_user, searchterm) => {
 				  
 	}
 }
+export const fetchProcessInfo = () => {
+	return dispatch => {
+		dispatch(infoProcessRequest());
+		dispatch(infoUniProcessRequest());
+		dispatch(infoDilProcessRequest());
+		const config = {
+		  headers: {
+			    "Content-Type": "application/x-www-form-urlencoded",
+			  }
+		};
+		var postData = new FormData();
+		postData.append("request", "unidade_judicial");
+		axios.post(`${API_URL}info_processo`, postData, config)
+		  .then(function (response) {
+		  	dispatch(infoUniProcessSuccess(response.data.informacoes));
+		  	console.log(response.data);
+		  	const config2 = {
+			  headers: {
+				    "Content-Type": "application/x-www-form-urlencoded",
+			  }
+			}; 
+			var postBody = new FormData();
+			postBody.append("request", "classe_diligencia");
+
+			axios.post(`${API_URL}info_processo`, postBody, config2)
+			.then(function (finalresponse) {
+				dispatch(infoDilProcessSuccess(finalresponse.data.informacoes));
+				dispatch(infoProcessSuccess());
+		  		console.log(finalresponse.data);
+			}).catch(function (error2) {
+				dispatch(infoDilProcessFail());
+				dispatch(infoProcessFail());
+				console.log(error2);
+			});
+
+		  })
+		  .catch(function (error) {
+		  	dispatch(infoUniProcessFail());
+		  	dispatch(infoProcessFail());
+		    console.log(error);
+		  });
+				  
+	}
+}
 const processFetchRequest = () => ({
 	type: 'PROCESS_FETCH_REQUEST'
 });
@@ -126,4 +179,35 @@ const searchProcessSuccess = (data) => ({
 });
 const searchProcessFail = () => ({
 	type: PROCESS_SEARCH_FAIL
+});
+// Info Types
+const infoProcessRequest = () => ({
+	type: PROCESS_INFO_REQUEST
+});
+const infoProcessSuccess = (data) => ({
+	type: PROCESS_INFO_SUCCESS,
+	payload: data
+});
+const infoProcessFail = () => ({
+	type: PROCESS_INFO_FAIL
+});
+const infoDilProcessRequest = () => ({
+	type: PROCESS_DIL_INFO_REQUEST
+});
+const infoDilProcessSuccess = (data) => ({
+	type: PROCESS_DIL_INFO_SUCCESS,
+	payload: data
+});
+const infoDilProcessFail = () => ({
+	type: PROCESS_DIL_INFO_FAIL
+});
+const infoUniProcessRequest = () => ({
+	type: PROCESS_UNI_INFO_REQUEST
+});
+const infoUniProcessSuccess = (data) => ({
+	type: PROCESS_UNI_INFO_SUCCESS,
+	payload: data
+});
+const infoUniProcessFail = () => ({
+	type: PROCESS_UNI_INFO_FAIL
 });

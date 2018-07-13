@@ -7,12 +7,25 @@ import {
 	PROCESS_ADD_FAIL,
 	PROCESS_SEARCH_REQUEST,
 	PROCESS_SEARCH_SUCCESS,
-	PROCESS_SEARCH_FAIL } from '../actions/actionTypes';
+	PROCESS_SEARCH_FAIL,
+	PROCESS_INFO_REQUEST,
+	PROCESS_INFO_SUCCESS,
+	PROCESS_INFO_FAIL,
+	PROCESS_DIL_INFO_REQUEST,
+	PROCESS_DIL_INFO_SUCCESS,
+	PROCESS_DIL_INFO_FAIL,
+	PROCESS_UNI_INFO_REQUEST,
+	PROCESS_UNI_INFO_SUCCESS,
+	PROCESS_UNI_INFO_FAIL } from '../actions/actionTypes';
 
 const initialState = {
 	userprocess: [],
 	loaded: false,
-	loading: true
+	loading: true,
+	infoLoaded: false,
+	infoLoading: false,
+	diligencia: [], 
+	unidadeJudicial: []
 };
 
 let http_errors = {
@@ -42,6 +55,24 @@ const reducer = (state = initialState, action) => {
 			return { ...state, loading: false, loaded: false };
 		case PROCESS_SEARCH_REQUEST:
 			return { ...state, loading: true, loaded: false };		
+		case PROCESS_INFO_SUCCESS:
+			return { ...state, infoLoading: false, infoLoaded: true };
+		case PROCESS_INFO_FAIL:
+			return { ...state, infoLoading: false, infoLoaded: false };
+		case PROCESS_INFO_REQUEST:
+			return { ...state, infoLoading: true, infoLoaded: false };	
+		case PROCESS_UNI_INFO_SUCCESS:
+			return { ...state, unidadeJudicial: action.payload, infoLoading: false, infoLoaded: true };
+		case PROCESS_UNI_INFO_FAIL:
+			return { ...state, infoLoading: false, infoLoaded: false };
+		case PROCESS_UNI_INFO_REQUEST:
+			return { ...state, infoLoading: true, infoLoaded: false };	
+		case PROCESS_DIL_INFO_SUCCESS:
+			return { ...state, diligencia: action.payload, infoLoading: false, infoLoaded: true };
+		case PROCESS_DIL_INFO_FAIL:
+			return { ...state, infoLoading: false, infoLoaded: false };
+		case PROCESS_DIL_INFO_REQUEST:
+			return { ...state, infoLoading: true, infoLoaded: false };	
 		default:
 			return state;
 	}

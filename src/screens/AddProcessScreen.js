@@ -4,6 +4,7 @@ import { List, ListItem, Text, Button, FormLabel, FormInput, FormValidationMessa
 import {APP_COLOR, DEVICE_WIDTH} from '../config/constants';
 import {
   addProcess,
+  fetchProcessInfo
 } from '../actions/process';
 import { connect } from 'react-redux';
 
@@ -23,10 +24,13 @@ class AddProcessScreen extends Component {
   componentWillMount(){
 
     AsyncStorage.getItem('@user_id:key').then((id) => {
-      this.setState({id_user: id})
+      this.setState({id_user: id});
     }).catch((error) => {
       console.log(error);
-    })
+    });
+
+    this.props.fetchProcessInfo();
+
   }
   componentDidUpdate(){
     if(this.props.loaded){
@@ -148,8 +152,11 @@ const styles = {
 const mapStateToProps = (state) => ({
   loading: state.userprocess.loading,
   loaded: state.userprocess.loaded,
+  info: state.userprocess.info,
+  infoLoaded: state.userprocess.infoLoaded,
+  infoLoading: state.userprocess.infoLoading,
 });
 
 export default connect(mapStateToProps, {
-  addProcess
+  addProcess, fetchProcessInfo
 })(AddProcessScreen);
