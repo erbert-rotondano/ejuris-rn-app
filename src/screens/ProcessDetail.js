@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { View, Text, ScrollView } from 'react-native';
 import {APP_COLOR, DEVICE_WIDTH} from '../config/constants';
+import { Button, FormLabel, FormInput } from 'react-native-elements';
+import {TextInput} from 'react-native';
 
 class ProcessDetail extends Component {
   render(){
@@ -30,9 +32,35 @@ class ProcessDetail extends Component {
 	        	<View style={styles.row}>
 	        		<Text style={styles.itemLabel}>Observação da Unidade: </Text><Text>{observacao_unidade}</Text>
 	        	</View>
+	        	<View style={styles.secondSection}>
+		        	<View style={styles.row}>
+		        		<View style={styles.column}>
+		        			<Text style={styles.subtitle}>Envie uma observação sobre este atendimento: </Text>
+			        		<TextInput
+					            style={styles.input}
+			  					placeholder='Mensagem: '
+			  					autoCapitalize={'none'}
+					            returnKeyType={'done'}
+			  					autoCorrect={true}
+					            placeholderTextColor='#AAAAAA'
+					            underlineColorAndroid='transparent'
+					            onChangeText={(value) => this.setState({msg: value})}/>
+			        		<Button
+							  raised
+							  backgroundColor={APP_COLOR}
+							  onPress={() => this.sendText(this.state.msg)}
+							  title='Enviar mensagem' />
+		        		</View>
+		        	</View>
+	        	</View>
 	       	</View>
+
        	</ScrollView>
     );
+  }
+  sendText(text){
+  	// make api call with redux, axios, and other stuff
+  	console.log(text);
   }
 
 }
@@ -53,6 +81,10 @@ const styles = {
 		alignItems: 'center',
 		marginBottom: 30
 	},
+	subtitle:{
+		fontSize: 13,
+		marginBottom: 15
+	},
 	titleText:{
 		fontSize: 18,
 		marginBottom: 15
@@ -69,6 +101,10 @@ const styles = {
 		paddingTop: 10,
 		paddingBottom: 10,
 		paddingRight: 10,
+		paddingLeft: 10
+	},
+	column: {
+		flexDirection: 'column',
 	},
 	buttonsContainer: {
 		flexDirection: 'row',
@@ -78,9 +114,7 @@ const styles = {
 		width: 170
 	},
 	secondSection:{
-		marginTop: 30,
-		flex: 1,
-		flexDirection: 'column'
+		marginTop: 15,
 	},
 	searchContainer:{
 		flexDirection: 'row',
@@ -92,15 +126,13 @@ const styles = {
 	},
 	input: {
 	    backgroundColor: 'rgba(255,255,255,0.4)',
-	    width: DEVICE_WIDTH - 125,
-	    height: 40,
-	    paddingLeft: 10,
-	    marginHorizontal: 20,
+	    width: 350,
+	    height: 50,
 	    borderRadius: 3,
 	    borderWidth: 1,
 	    borderColor: '#DDDDDD',
 	    color: '#555555',
-	    marginTop: 15
+	    marginBottom: 15
   	},
 }
 export default ProcessDetail;
