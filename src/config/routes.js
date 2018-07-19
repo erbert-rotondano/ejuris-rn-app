@@ -24,7 +24,18 @@ import { StackNavigator } from 'react-navigation'
 //     </TouchableOpacity>
 //   );
 // }
-
+const options = (navigation) => {
+  return (
+     <TouchableOpacity onPress={() => console.log('apertou')} >
+      <Icon
+        name='user'
+        type='entypo'
+        iconStyle={{ fontSize: 24, color: '#FFFFFF' }}
+        containerStyle={{ paddingLeft: 4, paddingRight: 16 }}
+      />
+    </TouchableOpacity>
+  )
+}
 export const Navigator = new StackNavigator({
   Home: { 
   	screen: Home,
@@ -39,7 +50,8 @@ export const Navigator = new StackNavigator({
       //   left: null
       // },
       headerTintColor: '#fff',
-      headerLeft: null
+      headerLeft: null,
+      headerRight: options(navigation)
     })
   },
   TestScreen: { 
@@ -75,6 +87,7 @@ export const Navigator = new StackNavigator({
         backgroundColor: 'rgba(54,57,62,1)',
       },
       headerTintColor: '#fff',
+      headerRight: options(navigation),
       // headerLeft: back(navigation)
     })
   },
@@ -87,6 +100,7 @@ export const Navigator = new StackNavigator({
         backgroundColor: 'rgba(54,57,62,1)',
       },
       headerTintColor: '#fff',
+      headerRight: options(navigation),
       // headerLeft: back(navigation)
     })
   },
@@ -99,6 +113,7 @@ export const Navigator = new StackNavigator({
         backgroundColor: 'rgba(54,57,62,1)',
       },
       headerTintColor: '#fff',
+      headerRight: options(navigation),
       // headerLeft: back(navigation)
     })
   },
@@ -111,6 +126,7 @@ export const Navigator = new StackNavigator({
         backgroundColor: 'rgba(54,57,62,1)',
       },
       headerTintColor: '#fff',
+      headerRight: options(navigation),
       // headerLeft: back(navigation)
     })
   },
