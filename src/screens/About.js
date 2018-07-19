@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View } from 'react-native';
+import {Text} from 'react-native';
 
 class About extends Component {
   render(){
