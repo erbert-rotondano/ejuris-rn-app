@@ -6,6 +6,7 @@ import TestScreen from '../screens/TestScreen';
 import AddProcessScreen from '../screens/AddProcessScreen';
 import Login from '../screens/Login';
 import Signup from '../screens/Signup';
+import UserOptions from '../screens/UserOptions';
 import SearchResult from '../screens/SearchResult';
 import ProcessDetail from '../screens/ProcessDetail';
 import ProcessList from '../screens/ProcessList';
@@ -26,7 +27,7 @@ import { StackNavigator } from 'react-navigation'
 // }
 const options = (navigation) => {
   return (
-     <TouchableOpacity onPress={() => console.log('apertou')} >
+     <TouchableOpacity onPress={() =>  navigation.navigate('UserOptions')} >
       <Icon
         name='user'
         type='entypo'
@@ -135,6 +136,18 @@ export const Navigator = new StackNavigator({
     navigationOptions: ({ navigation }) => ({
       drawerLabel: 'Signup',
       title: 'Cadastrar-se',
+      headerStyle: {
+        backgroundColor: 'rgba(54,57,62,1)',
+      },
+      headerTintColor: '#fff',
+      // headerLeft: back(navigation)
+    })
+  },
+  UserOptions: { 
+    screen: UserOptions ,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'UserOptions',
+      title: 'Área do Usuário',
       headerStyle: {
         backgroundColor: 'rgba(54,57,62,1)',
       },
