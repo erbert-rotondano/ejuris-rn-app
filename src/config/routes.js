@@ -10,6 +10,7 @@ import UserOptions from '../screens/UserOptions';
 import UserProfile from '../screens/UserProfile';
 import FAQ from '../screens/FAQ';
 import Contact from '../screens/Contact';
+import About from '../screens/About';
 import SearchResult from '../screens/SearchResult';
 import ProcessDetail from '../screens/ProcessDetail';
 import ProcessList from '../screens/ProcessList';
@@ -187,6 +188,18 @@ export const Navigator = new StackNavigator({
     navigationOptions: ({ navigation }) => ({
       drawerLabel: 'Contact',
       title: 'Contate-nos',
+      headerStyle: {
+        backgroundColor: 'rgba(54,57,62,1)',
+      },
+      headerTintColor: '#fff',
+      // headerLeft: back(navigation)
+    })
+  },
+   About: { 
+    screen: About ,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'About',
+      title: 'Sobre nós',
       headerStyle: {
         backgroundColor: 'rgba(54,57,62,1)',
       },
