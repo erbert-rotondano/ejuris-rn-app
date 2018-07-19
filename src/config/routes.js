@@ -8,6 +8,7 @@ import Login from '../screens/Login';
 import Signup from '../screens/Signup';
 import UserOptions from '../screens/UserOptions';
 import UserProfile from '../screens/UserProfile';
+import FAQ from '../screens/FAQ';
 import SearchResult from '../screens/SearchResult';
 import ProcessDetail from '../screens/ProcessDetail';
 import ProcessList from '../screens/ProcessList';
@@ -161,6 +162,18 @@ export const Navigator = new StackNavigator({
     navigationOptions: ({ navigation }) => ({
       drawerLabel: 'UserProfile',
       title: 'Detalhes do Usuário',
+      headerStyle: {
+        backgroundColor: 'rgba(54,57,62,1)',
+      },
+      headerTintColor: '#fff',
+      // headerLeft: back(navigation)
+    })
+  },
+  FAQ: { 
+    screen: FAQ ,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'FAQ',
+      title: 'Perguntas Frequentes',
       headerStyle: {
         backgroundColor: 'rgba(54,57,62,1)',
       },
