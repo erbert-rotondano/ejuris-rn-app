@@ -49,7 +49,7 @@ class Home extends Component {
 	}
   	render(){
     return(
-    	<KeyboardAvoidingView behavior="position" style={styles.generalContainer}>
+    	<KeyboardAvoidingView behavior="position">
     		<View style={styles.firstSection}>
 	    		<View style={styles.textContainer}>
 	    			<Text style={styles.titleText}>Meus Atendimentos</Text>

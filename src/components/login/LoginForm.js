@@ -19,6 +19,7 @@ import apiUtils from '../../config/apiUtils';
 import { connect } from 'react-redux';
 import { emailChanged, passwordChanged, userLogin } from '../../actions/auth';
 import md5 from "react-native-md5";
+import axios from 'axios';
 
 class LoginForm extends Component {
   
@@ -102,6 +103,7 @@ class LoginForm extends Component {
 
   componentWillMount() {
     this._loadAuthentication_token().done();
+    axios.get('https://jsonplaceholder.typicode.com/posts').then(response => console.log(response)).catch(error => console.log(error));
   }
 
   // componentDidUpdate() {
