@@ -9,6 +9,7 @@ import Signup from '../screens/Signup';
 import UserOptions from '../screens/UserOptions';
 import UserProfile from '../screens/UserProfile';
 import FAQ from '../screens/FAQ';
+import Contact from '../screens/Contact';
 import SearchResult from '../screens/SearchResult';
 import ProcessDetail from '../screens/ProcessDetail';
 import ProcessList from '../screens/ProcessList';
@@ -174,6 +175,18 @@ export const Navigator = new StackNavigator({
     navigationOptions: ({ navigation }) => ({
       drawerLabel: 'FAQ',
       title: 'Perguntas Frequentes',
+      headerStyle: {
+        backgroundColor: 'rgba(54,57,62,1)',
+      },
+      headerTintColor: '#fff',
+      // headerLeft: back(navigation)
+    })
+  },
+  Contact: { 
+    screen: Contact ,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'Contact',
+      title: 'Contate-nos',
       headerStyle: {
         backgroundColor: 'rgba(54,57,62,1)',
       },
