@@ -5,6 +5,7 @@ import { Button, FormLabel, FormInput } from 'react-native-elements';
 import {TextInput} from 'react-native';
 import {getUserInfo} from '../actions/auth';
 import { connect } from 'react-redux';
+import Spinner from '../components/common/Spinner';
 
 class UserProfile extends Component {
 	componentWillMount(){
@@ -22,35 +23,50 @@ class UserProfile extends Component {
 			console.log(error);
 		});
 	}
+	
   render(){
     return(
     	<ScrollView style={{flex: 1}}>
 	        <View style={styles.generalContainer}>
-	        	<View style={styles.row}>
-	        		<Text> Essa é alguma informação do usuário </Text>
-	        	</View>
-	        	<View style={styles.row}>
-	        		<Text> Essa é alguma informação do usuário </Text>
-	        	</View>
-	        	<View style={styles.row}>
-	        		<Text> Essa é alguma informação do usuário </Text>
-	        	</View>
-	        	<View style={styles.row}>
-	        		<Text> Essa é alguma informação do usuário </Text>
-	        	</View>
-	        	<View style={styles.row}>
-	        		<Text> Essa é alguma informação do usuário </Text>
-	        	</View>
-	        	<View style={styles.row}>
-	        		<Text> Essa é alguma informação do usuário </Text>
-	        	</View>
-	        	<View style={styles.row}>
-	        		<Text> Essa é alguma informação do usuário </Text>
-	        	</View>
+	        	{this.renderUserInfo()}
 	       	</View>
 
        	</ScrollView>
     );
+  }
+  renderUserInfo(){
+  	const { username, phone, competence, address } = this.props;
+  	console.log(this.props.email)
+  	if(this.props.loadingUserData){
+  		return(
+          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <Spinner size="large" />
+          </View>
+        )
+  	} else {
+	  	if(this.props.loadedUserData){
+	  		return(
+		  		<View>
+			  		<View style={styles.row}>
+						<Text style={styles.itemLabel}>Email: </Text><Text>{this.props.email || 'Informação não encontrada'}</Text>
+					</View>
+			  		<View style={styles.row}>
+						<Text style={styles.itemLabel}>Nome: </Text><Text>{this.props.username || 'Informação não encontrada'}</Text>
+					</View>
+					<View style={styles.row}>
+						<Text style={styles.itemLabel}>Telefone: </Text><Text>{this.props.phone || 'Informação não encontrada'}</Text>
+					</View>
+					<View style={styles.row}>
+						<Text style={styles.itemLabel}>Competência: </Text><Text>{this.props.competence || 'Informação não encontrada'}</Text>
+					</View>
+					<View style={styles.row}>
+						<Text style={styles.itemLabel}>Endereço: </Text><Text>{this.props.address || 'Informação não encontrada'}</Text>
+					</View>
+				</View>
+	  		);
+	  	}
+  	}
+  	
   }
 }
 
@@ -130,7 +146,8 @@ const mapStateToProps = (state) => ({
   username: state.auth.username,
   phone: state.auth.phone,
   competence: state.auth.competence,
-  address:  state.auth.address
+  address: state.auth.address,
+  email: state.auth.email
 });
 
 export default connect(mapStateToProps, {getUserInfo})(UserProfile);

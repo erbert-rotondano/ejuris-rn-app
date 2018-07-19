@@ -264,8 +264,8 @@ export const getUserInfoRequest = () => ({
 export const getUserInfoSuccess = (data) => ({
 	type: GET_USER_INFO_SUCCESS,
 	email:  data.email,
-	username: data.username,
-	address: data.address,
+	username: data.name,
+	address: data.adress,
 	phone: data.phone,
 	competence: data.competence,
 	payload: data,
