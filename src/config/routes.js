@@ -7,6 +7,7 @@ import AddProcessScreen from '../screens/AddProcessScreen';
 import Login from '../screens/Login';
 import Signup from '../screens/Signup';
 import UserOptions from '../screens/UserOptions';
+import UserProfile from '../screens/UserProfile';
 import SearchResult from '../screens/SearchResult';
 import ProcessDetail from '../screens/ProcessDetail';
 import ProcessList from '../screens/ProcessList';
@@ -148,6 +149,18 @@ export const Navigator = new StackNavigator({
     navigationOptions: ({ navigation }) => ({
       drawerLabel: 'UserOptions',
       title: 'Área do Usuário',
+      headerStyle: {
+        backgroundColor: 'rgba(54,57,62,1)',
+      },
+      headerTintColor: '#fff',
+      // headerLeft: back(navigation)
+    })
+  },
+  UserProfile: { 
+    screen: UserProfile ,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'UserProfile',
+      title: 'Detalhes do Usuário',
       headerStyle: {
         backgroundColor: 'rgba(54,57,62,1)',
       },

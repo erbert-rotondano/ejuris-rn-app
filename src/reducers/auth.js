@@ -6,7 +6,10 @@ import {
 	SIGNUP_SUCCESS,
 	SIGNUP_FAILED,
 	SIGNUP_REQUEST,
-	LOGOUT_SUCCESS } from '../actions/actionTypes';
+	LOGOUT_SUCCESS,
+	GET_USER_INFO_REQUEST,
+	GET_USER_INFO_SUCCESS,
+	GET_USER_INFO_FAILED } from '../actions/actionTypes';
 
 const initialState = {
 	email: '',
@@ -105,6 +108,12 @@ const reducer = (state = initialState, action) => {
 				...state,
 				...initialState,
 			}
+		case GET_USER_INFO_REQUEST:
+      		return { ...state, loadingUserData: true, loadedUserData: false };
+    	case GET_USER_INFO_SUCCESS:
+      		return { ...state, loadingUserData: false, loadedUserData: true, username: action.payload.name, competence: action.payload.competence, address: action.payload.address, phone: action.payload.phone };
+      	case GET_USER_INFO_FAILED:
+      		return { ...state, loadingUserData: false, loadedUserData: false };
 		default:
 			return state;
 	}

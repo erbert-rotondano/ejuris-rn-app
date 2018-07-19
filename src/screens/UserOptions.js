@@ -4,7 +4,7 @@ import { List, ListItem} from 'react-native-elements';
 
 class UserOptions extends Component {
  items = [
-	 		{id: 1, title: 'Perfil', routeName: 'UserDetail', icon: 'person'}, 
+	 		{id: 1, title: 'Perfil', routeName: 'UserProfile', icon: 'person'}, 
 	 		{id: 2, title: 'Perguntas Frequentes', routeName: 'FAQ', icon: 'question-answer'},
 	 		{id: 3, title: 'Contato', routeName: 'Contact', icon: 'mail'},
 	 		{id: 4, title: 'Sobre', routeName: 'About', icon: 'info'},

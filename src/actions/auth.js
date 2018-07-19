@@ -5,7 +5,10 @@ import {
 	SIGNUP_SUCCESS,
 	SIGNUP_FAILED,
 	SIGNUP_REQUEST,
-	LOGOUT_SUCCESS, } from '../actions/actionTypes';
+	LOGOUT_SUCCESS, 
+	GET_USER_INFO_REQUEST,
+	GET_USER_INFO_SUCCESS,
+	GET_USER_INFO_FAILED} from '../actions/actionTypes';
 import md5 from "react-native-md5";
 import {API_URL} from '../config/constants'
 
@@ -175,6 +178,55 @@ export const userSignup = ( {email, password, password_confirmation, username, p
 	}
 }
 
+export const getUserInfo = ( {email, password} ) => {
+	return dispatch => {
+		dispatch(getUserInfoRequest());
+		const config = {
+		  headers: {
+			    "Content-Type": "application/x-www-form-urlencoded",
+			    "Cache-Control": "no-cache"
+			  }
+		};
+		var postData = new FormData();
+		postData.append("email", email);
+		postData.append("senha", password);
+		postData.append("request", "processes");
+		postData.append("status", "concluido");
+
+		axios.post(`${API_URL}login`, postData, config)
+		.then(response => {
+			if(response.data.id){
+				dispatch(getUserInfoSuccess(response.data));
+
+			} else {
+				dispatch(getUserInfoFailed(401));
+			}
+			console.log('response json: ', response.data);
+			
+			// console.log(response.data.email);
+			// console.log(response.data.authentication_token);
+			// console.log(response);
+		})
+		.catch(error => {
+			
+			if (error.response) {
+				console.log(error.response.status);
+				dispatch(getUserInfoSuccess(error.response.status))
+			} else if (error.request) {
+					console.log(error.request);
+				// 	console.log('Error request', error.request.status);
+				// 	console.log('Error request', error.request._response);
+				dispatch(getUserInfoSuccess(error.request.status))
+			} else {
+					console.log('Error', error.message);
+				// 	console.log('Error ', error.request.status);
+				dispatch(getUserInfoSuccess(error.request.status))
+			}
+		    // console.log(error.config);
+		});
+	}
+}
+
 export const userLogout = () => {
 	return dispatch => {
 		dispatch(logoutSuccess());
@@ -203,6 +255,17 @@ export const loginSuccess = (data) => ({
 export const loginFailed = (status) => ({
 	type: LOGIN_FAILED,
 	error_status: status
+});
+
+export const getUserInfoRequest = () => ({
+	type: GET_USER_INFO_REQUEST,
+});
+export const getUserInfoSuccess = (data) => ({
+	type: GET_USER_INFO_SUCCESS,
+	payload: data
+});
+export const getUserInfoFailed = () => ({
+	type: GET_USER_INFO_FAILED,
 });
 
 export const signupRequest = () => ({
