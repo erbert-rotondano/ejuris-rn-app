@@ -184,7 +184,6 @@ export const getUserInfo = ( {email, password} ) => {
 		const config = {
 		  headers: {
 			    "Content-Type": "application/x-www-form-urlencoded",
-			    "Cache-Control": "no-cache"
 			  }
 		};
 		var postData = new FormData();
@@ -192,16 +191,18 @@ export const getUserInfo = ( {email, password} ) => {
 		postData.append("senha", password);
 		postData.append("request", "processes");
 		postData.append("status", "concluido");
+		console.log(email, password);
 
 		axios.post(`${API_URL}login`, postData, config)
 		.then(response => {
-			if(response.data.id){
+			console.log('response json: ', response);
+			// if(response.data.id){
 				dispatch(getUserInfoSuccess(response.data));
 
-			} else {
-				dispatch(getUserInfoFailed(401));
-			}
-			console.log('response json: ', response.data);
+			// } else {
+				// dispatch(getUserInfoFailed(401));
+			// }
+			
 			
 			// console.log(response.data.email);
 			// console.log(response.data.authentication_token);
@@ -262,7 +263,12 @@ export const getUserInfoRequest = () => ({
 });
 export const getUserInfoSuccess = (data) => ({
 	type: GET_USER_INFO_SUCCESS,
-	payload: data
+	email:  data.email,
+	username: data.username,
+	address: data.address,
+	phone: data.phone,
+	competence: data.competence,
+	payload: data,
 });
 export const getUserInfoFailed = () => ({
 	type: GET_USER_INFO_FAILED,

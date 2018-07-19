@@ -1,10 +1,27 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, AsyncStorage} from 'react-native';
 import {APP_COLOR, DEVICE_WIDTH} from '../config/constants';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
 import {TextInput} from 'react-native';
+import {getUserInfo} from '../actions/auth';
+import { connect } from 'react-redux';
 
-class UserDetail extends Component {
+class UserProfile extends Component {
+	componentWillMount(){
+		this.loadUserInfo(); 
+	}
+	loadUserInfo = async () => {
+		AsyncStorage.getItem('@email:key').then((email) => {
+			AsyncStorage.getItem('@password:key').then((password) => {
+				this.props.getUserInfo({email, password});
+				console.log(email, password);			
+			}).catch(error => {
+				console.log(error);
+			});
+		}).catch(error => {
+			console.log(error);
+		});
+	}
   render(){
     return(
     	<ScrollView style={{flex: 1}}>
@@ -107,4 +124,13 @@ const styles = {
 	    marginBottom: 15
   	},
 }
-export default UserDetail;
+const mapStateToProps = (state) => ({
+  loadingUserData: state.auth.loadingUserData,	
+  loadedUserData: state.auth.loadedUserData,
+  username: state.auth.username,
+  phone: state.auth.phone,
+  competence: state.auth.competence,
+  address:  state.auth.address
+});
+
+export default connect(mapStateToProps, {getUserInfo})(UserProfile);

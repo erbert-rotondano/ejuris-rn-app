@@ -111,7 +111,7 @@ const reducer = (state = initialState, action) => {
 		case GET_USER_INFO_REQUEST:
       		return { ...state, loadingUserData: true, loadedUserData: false };
     	case GET_USER_INFO_SUCCESS:
-      		return { ...state, loadingUserData: false, loadedUserData: true, username: action.payload.name, competence: action.payload.competence, address: action.payload.address, phone: action.payload.phone };
+      		return { ...state, loadingUserData: false, loadedUserData: true, username: action.username, competence: action.competence, address: action.address, phone: action.phone, email: action.email };
       	case GET_USER_INFO_FAILED:
       		return { ...state, loadingUserData: false, loadedUserData: false };
 		default:
