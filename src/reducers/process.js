@@ -73,6 +73,12 @@ const reducer = (state = initialState, action) => {
 			return { ...state, infoLoading: false, infoLoaded: false };
 		case PROCESS_DIL_INFO_REQUEST:
 			return { ...state, infoLoading: true, infoLoaded: false };	
+		case EDIT_PROCESS_OBS_SUCCESS:
+			return { ...state, editLoading: false, editLoaded: true };
+		case EDIT_PROCESS_OBS_FAIL:
+			return { ...state, editLoading: false, editLoaded: false };
+		case EDIT_PROCESS_OBS_REQUEST:
+			return { ...state, editLoading: true, editLoaded: false };	
 		default:
 			return state;
 	}
