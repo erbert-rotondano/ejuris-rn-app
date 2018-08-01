@@ -16,7 +16,10 @@ import {
 	PROCESS_DIL_INFO_FAIL,
 	PROCESS_UNI_INFO_REQUEST,
 	PROCESS_UNI_INFO_SUCCESS,
-	PROCESS_UNI_INFO_FAIL } from '../actions/actionTypes';
+	PROCESS_UNI_INFO_FAIL,
+	EDIT_PROCESS_OBS_REQUEST,
+	EDIT_PROCESS_OBS_SUCCESS,
+	EDIT_PROCESS_OBS_FAIL } from '../actions/actionTypes';
 
 const initialState = {
 	userprocess: [],
@@ -25,7 +28,9 @@ const initialState = {
 	infoLoaded: false,
 	infoLoading: false,
 	diligencia: [], 
-	unidadeJudicial: []
+	unidadeJudicial: [],
+	editLoading: false,
+	editLoaded: true
 };
 
 let http_errors = {

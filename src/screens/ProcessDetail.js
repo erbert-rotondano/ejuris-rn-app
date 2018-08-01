@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, Alert } from 'react-native';
 import {APP_COLOR, DEVICE_WIDTH} from '../config/constants';
 import { Button, FormLabel, FormInput } from 'react-native-elements';
 import {TextInput} from 'react-native';
+import {editProcessObs} from '../actions/process';
+import {connect} from 'react-redux';
+import Spinner from '../components/common/Spinner';
 
 class ProcessDetail extends Component {
   render(){
@@ -36,20 +39,7 @@ class ProcessDetail extends Component {
 		        	<View style={styles.row}>
 		        		<View style={styles.column}>
 		        			<Text style={styles.subtitle}>Envie uma observação sobre este atendimento: </Text>
-			        		<TextInput
-					            style={styles.input}
-			  					placeholder='Mensagem: '
-			  					autoCapitalize={'none'}
-					            returnKeyType={'done'}
-			  					autoCorrect={true}
-					            placeholderTextColor='#AAAAAA'
-					            underlineColorAndroid='transparent'
-					            onChangeText={(value) => this.setState({msg: value})}/>
-			        		<Button
-							  raised
-							  backgroundColor={APP_COLOR}
-							  onPress={() => this.sendText(this.state.msg)}
-							  title='Enviar mensagem' />
+			        		{this.renderButton(id_process)}
 		        		</View>
 		        	</View>
 	        	</View>
@@ -58,9 +48,58 @@ class ProcessDetail extends Component {
        	</ScrollView>
     );
   }
-  sendText(text){
+  renderButton(id_process){
+  	 if( this.props.editLoading ){
+        return(
+          <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+            <Spinner size="large" />
+          </View>
+        )
+      } else {
+        if(this.props.editLoaded){
+          return(
+            <View>
+            	<TextInput
+		            style={styles.input}
+  					placeholder='Mensagem: '
+  					autoCapitalize={'none'}
+		            returnKeyType={'done'}
+  					autoCorrect={true}
+		            placeholderTextColor='#AAAAAA'
+		            underlineColorAndroid='transparent'
+		            onChangeText={(value) => this.setState({msg: value})}/>
+        		<Button
+				  raised
+				  backgroundColor={APP_COLOR}
+				  onPress={() => this.sendText(id_process, this.state.msg)}
+				  title='Enviar mensagem' />
+            </View>
+          )
+        } else {
+        return(
+          <View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center'}}>
+            <Text style={{fontSize: 14, color: '#252525', textAlign: 'center'}}>
+              Há algum problema com o servidor, tente novamente mais tarde.
+            </Text>
+          </View>
+        )
+      }
+    }
+  }
+  sendText(id_process, msg){
   	// make api call with redux, axios, and other stuff
-  	console.log(text);
+  	this.props.editProcessObs(id_process, msg);
+  	if(this.props.editLoaded){
+	       Alert.alert(
+	        'Mensagem enviada com sucesso',
+	        '',
+	        [
+	          {text: 'OK', onPress: () => this.props.navigation.navigate('Home')},
+	        ],
+	        { cancelable: true }
+	      )
+  	}
+  	
   }
 
 }
@@ -135,4 +174,9 @@ const styles = {
 	    marginBottom: 15
   	},
 }
-export default ProcessDetail;
+const mapStateToProps = (state) => ({
+  editLoading: state.userprocess.editLoading,	
+  editLoaded: state.userprocess.editLoaded
+});
+
+export default connect(mapStateToProps, {editProcessObs})(ProcessDetail);
