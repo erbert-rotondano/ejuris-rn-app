@@ -16,7 +16,10 @@ import {
 	PROCESS_DIL_INFO_FAIL,
 	PROCESS_UNI_INFO_REQUEST,
 	PROCESS_UNI_INFO_SUCCESS,
-	PROCESS_UNI_INFO_FAIL } from '../actions/actionTypes';
+	PROCESS_UNI_INFO_FAIL,
+	EDIT_PROCESS_OBS_REQUEST,
+	EDIT_PROCESS_OBS_SUCCESS,
+	EDIT_PROCESS_OBS_FAIL } from '../actions/actionTypes';
 
 import {API_URL} from '../config/constants'
 import axios from 'axios';
@@ -151,6 +154,30 @@ export const fetchProcessInfo = () => {
 				  
 	}
 }
+export const editProcessObs = (id_processo, obs) => {
+	return dispatch => {
+		dispatch(editProcessObsRequest());
+		const config = {
+		  headers: {
+			    "Content-Type": "application/x-www-form-urlencoded",
+			  }
+		};
+		var postData = new FormData();
+		postData.append("id_processo", id_processo);
+		postData.append("descricao", obs);
+
+		// axios.post(`${API_URL}url`, postData, config)
+		axios.post(`${API_URL}edita_processo`, postData, config)
+		  .then((response) => {
+		  	dispatch(editProcessObsSuccess(response.data));
+		  	console.log(response.data);
+		  })
+		  .catch((error) => {
+		  	dispatch(editProcessObsFail());
+		    console.log(error);
+		  });
+	}
+}
 const processFetchRequest = () => ({
 	type: 'PROCESS_FETCH_REQUEST'
 });
@@ -179,6 +206,16 @@ const searchProcessSuccess = (data) => ({
 });
 const searchProcessFail = () => ({
 	type: PROCESS_SEARCH_FAIL
+});
+const editProcessObsRequest = () => ({
+	type: EDIT_PROCESS_OBS_REQUEST
+});
+const editProcessObsSuccess = (data) => ({
+	type: EDIT_PROCESS_OBS_SUCCESS,
+	payload: data
+});
+const editProcessObsFail = () => ({
+	type: EDIT_PROCESS_OBS_FAIL
 });
 // Info Types
 const infoProcessRequest = () => ({
