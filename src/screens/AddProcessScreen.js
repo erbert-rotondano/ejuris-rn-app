@@ -85,7 +85,7 @@ class AddProcessScreen extends Component {
                 placeholderTextColor='#AAAAAA'
                 underlineColorAndroid='transparent'
                 onChangeText={(value) => this.setState({protocolo: value})}
-                onSubmitEditing={() => this.classeDiligencia.focus()} />
+                onSubmitEditing={() => this.observacao.focus()} />
           <Picker
             style={styles.pickerStyle}
             selectedValue={this.state.classeDiligencia}

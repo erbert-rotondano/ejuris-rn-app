@@ -24,7 +24,7 @@ componentWillMount(){
           </View>
         )
       } else {
-        if(this.props.loaded){
+        if(this.props.loaded && this.props.userprocess){
           return(
             <ScrollView style={{flex: 1}}>
             <List
@@ -49,10 +49,12 @@ componentWillMount(){
           )
         } else {
         return(
-          <View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center'}}>
-            <Text style={{fontSize: 14, color: '#252525', textAlign: 'center'}}>
+          <View style={{flex: 1,flexDirection: 'column',justifyContent: 'center',alignItems: 'center', paddingTop: 200, paddingBottom: 300}}>
+            <View style={{flex: 1,flexDirection: 'row',justifyContent: 'center',alignItems: 'center'}}>
+            <Text style={{fontSize: 22, color: '#252525', textAlign: 'center'}}>
               Nenhum atendimento encontrado na busca por: "{this.props.navigation.state.params.searchterm}".
             </Text>
+            </View>
           </View>
         )
       }
