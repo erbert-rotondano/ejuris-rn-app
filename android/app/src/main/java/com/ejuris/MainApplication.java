@@ -1,4 +1,4 @@
-package com.ejurios;
+package com.ejuris;
 
 import android.app.Application;
 
