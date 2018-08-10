@@ -117,8 +117,10 @@ class LoginForm extends Component {
       AsyncStorage.getItem('@password:key').then((password) => {
         AsyncStorage.getItem('@user_id:key').then((user_id) => {
               if(email && password && user_id){
-                console.log(email, password, user_id);
-                this.props.navigation.navigate('Home');
+                if(email != 'user_is_unlogged' && password != 'user_is_unlogged' && user_id != 'user_is_unlogged'){
+                  console.log(email, password, user_id);
+                  this.props.navigation.navigate('Home');
+                }
               }
             }).catch((error) => { console.log('não achou id:', error)});
       }).catch((error) => {console.log('não achou senha:', error)});

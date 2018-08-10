@@ -107,6 +107,14 @@ const reducer = (state = initialState, action) => {
 			return {
 				...state,
 				...initialState,
+				isAuthenticated: false,
+				authentication_token: null,
+				email: null,
+				username: null,
+				competence: null,
+				address: null,
+				password: null,
+				user_id: null
 			}
 		case GET_USER_INFO_REQUEST:
       		return { ...state, loadingUserData: true, loadedUserData: false };

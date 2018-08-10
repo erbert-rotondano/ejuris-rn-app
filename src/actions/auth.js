@@ -11,6 +11,7 @@ import {
 	GET_USER_INFO_FAILED} from '../actions/actionTypes';
 import md5 from "react-native-md5";
 import {API_URL} from '../config/constants'
+import {AsyncStorage} from 'react-native';
 
 import axios from 'axios';
 
@@ -231,16 +232,18 @@ export const getUserInfo = ( {email, password} ) => {
 export const userLogout = () => {
 	return dispatch => {
 		dispatch(logoutSuccess());
-		this._setAuthentication_tokenToNull().done();
 	}
 }
 
 _setAuthentication_tokenToNull = async () => {
     try {
       await AsyncStorage.setItem('@authentication_token:key', 'asd');
-      this.props.navigation.navigate('drawerStack');
+      await AsyncStorage.setItem('@email:key', 'asd');
+      await AsyncStorage.setItem('@password:key', 'asd');
+      await AsyncStorage.setItem('@user_id:key', '0');
+      this.props.navigation.navigate('Login');
     } catch (error) {
-      // Error saving data
+      console.log(error);
     }
 }
 
