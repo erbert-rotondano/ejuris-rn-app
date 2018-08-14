@@ -121,8 +121,19 @@ class AddProcessScreen extends Component {
     );
   }
   handleButtonPress(){
-    const {numero, protocolo, classeDiligencia, observacao, cidade} = this.state;
-      this.props.addProcess(numero, protocolo, classeDiligencia, observacao, cidade, 'a', this.state.id_user, 1);    
+    const {numero, protocolo, classeDiligencia, observacao, cidade, unidadeJudicial} = this.state;
+    if((numero != null && numero != '') && (observacao != null && observacao != '') && (classeDiligencia != 'empty') && (cidade != 'empty') && (unidadeJudicial != 'empty')){
+      this.props.addProcess(numero, protocolo, classeDiligencia, observacao, cidade, '', this.state.id_user, 1);       
+    } else {
+      Alert.alert(
+        'Confira os dados e tente novamente',
+        'É necessário preencher todos os campos para que o processo seja cadastrado',
+        [
+          {text: 'OK', onPress: () => this.numero.focus()},
+        ],
+        { cancelable: true }
+      );
+    }
   }
   renderDilPickItems(){
       return this.props.diligencia.map((dil) => 
