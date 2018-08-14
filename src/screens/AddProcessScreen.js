@@ -4,7 +4,8 @@ import { List, ListItem, Text, Button, FormLabel, FormInput, FormValidationMessa
 import {APP_COLOR, DEVICE_WIDTH, CIDADES} from '../config/constants';
 import {
   addProcess,
-  fetchProcessInfo
+  fetchProcessInfo,
+  cleanAddedProcess
 } from '../actions/process';
 import { connect } from 'react-redux';
 
@@ -39,11 +40,16 @@ class AddProcessScreen extends Component {
         'Processo cadastrado com sucesso',
         '',
         [
-          {text: 'OK', onPress: () => this.props.navigation.navigate('Home')},
+          {text: 'OK', onPress: () => this.redirectToHome()},
         ],
         { cancelable: true }
-      )
+      );
+
     }
+  }
+  redirectToHome(){
+    this.props.navigation.navigate('Home');
+    this.props.cleanAddedProcess();
   }
   render(){
     return(
@@ -186,5 +192,5 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-  addProcess, fetchProcessInfo
+  addProcess, fetchProcessInfo, cleanAddedProcess
 })(AddProcessScreen);

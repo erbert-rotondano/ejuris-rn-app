@@ -19,7 +19,8 @@ import {
 	PROCESS_UNI_INFO_FAIL,
 	EDIT_PROCESS_OBS_REQUEST,
 	EDIT_PROCESS_OBS_SUCCESS,
-	EDIT_PROCESS_OBS_FAIL } from '../actions/actionTypes';
+	EDIT_PROCESS_OBS_FAIL,
+	CLEAN_ADDED_PROCESS } from '../actions/actionTypes';
 
 import {API_URL} from '../config/constants'
 import axios from 'axios';
@@ -83,7 +84,11 @@ export const addProcess = (numero, protocolo, classe_diligencia, obs, cidade, ob
 				  
 	}
 }
-
+export const cleanAddedProcess = () => {
+	return dispatch => {
+		dispatch(cleanAddedProcessSuccess());				  
+	}
+}
 export const processSearch = (id_user, searchterm) => {
 	return dispatch => {
 		dispatch(processFetchRequest());
@@ -196,6 +201,9 @@ const addProcessSuccess = () => ({
 });
 const addProcessFail = () => ({
 	type: PROCESS_ADD_FAIL
+});
+const cleanAddedProcessSuccess = () => ({
+	type: CLEAN_ADDED_PROCESS
 });
 const searchProcessRequest = () => ({
 	type: PROCESS_SEARCH_REQUEST

@@ -19,7 +19,8 @@ import {
 	PROCESS_UNI_INFO_FAIL,
 	EDIT_PROCESS_OBS_REQUEST,
 	EDIT_PROCESS_OBS_SUCCESS,
-	EDIT_PROCESS_OBS_FAIL } from '../actions/actionTypes';
+	EDIT_PROCESS_OBS_FAIL,
+	CLEAN_ADDED_PROCESS } from '../actions/actionTypes';
 
 const initialState = {
 	userprocess: [],
@@ -84,6 +85,8 @@ const reducer = (state = initialState, action) => {
 			return { ...state, editLoading: false, editLoaded: false };
 		case EDIT_PROCESS_OBS_REQUEST:
 			return { ...state, editLoading: true, editLoaded: false };	
+		case CLEAN_ADDED_PROCESS:
+			return { ...state, loading: true, loaded: false };
 		default:
 			return state;
 	}
