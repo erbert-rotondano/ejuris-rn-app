@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import {Text} from 'react-native';
 import axios from 'axios';
 import {API_URL, DEVICE_WIDTH} from '../config/constants';
