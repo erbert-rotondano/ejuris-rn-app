@@ -22,15 +22,17 @@ class Contact extends Component {
 	}
   render(){
     return(
-        <View style={styles.generalContainer}>
-        	<View style={styles.firstSection}>
-        		<Text>{this.state.contact.content}</Text>
-        	</View>
-        	<View style={styles.secondSection}>
-        		{this.renderPhones()}
-        		<Text>Email: {this.state.contact.email}</Text>
-        	</View>
-       	</View>
+    	<ScrollView>
+	        <View style={styles.generalContainer}>
+	        	<View style={styles.firstSection}>
+	        		<Text>{this.state.contact.content}</Text>
+	        	</View>
+	        	<View style={styles.secondSection}>
+	        		{this.renderPhones()}
+	        		<Text>Email: {this.state.contact.email}</Text>
+	        	</View>
+	       	</View>
+	    </ScrollView>
     );
   }
   renderPhones(){
