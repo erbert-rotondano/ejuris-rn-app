@@ -53,7 +53,7 @@ class AddProcessScreen extends Component {
   }
   render(){
     return(
-        <KeyboardAvoidingView behavior="position">
+        <KeyboardAvoidingView style={{flex: 1}} behavior="position" enabled>
         	<Text style={{fontSize: 15, marginLeft: 15, marginTop: 20}}> Informações do Atendimento </Text>
           <Picker
             style={styles.pickerStyle}
