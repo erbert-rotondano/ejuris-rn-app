@@ -31,7 +31,9 @@ const initialState = {
 	diligencia: [], 
 	unidadeJudicial: [],
 	editLoading: false,
-	editLoaded: true
+	editLoaded: true,
+	sending: false,
+	sended: false
 };
 
 let http_errors = {
@@ -48,11 +50,13 @@ const reducer = (state = initialState, action) => {
     	case PROCESS_FETCH_FAIL:
       		return { ...state, loading: false, loaded: false };
       	case PROCESS_FETCH_REQUEST:
-      		return { ...state, loading: true, loaded: false };
+      		return { ...state, sending: true, sended: false };
 		case PROCESS_ADD_SUCCESS:
-			return { ...state, loading: false, loaded: true };
+			return { ...state, sending: false, sended: true };
+		case CLEAN_ADDED_PROCESS:
+			return { ...state, sending: false, sended: false };
 		case PROCESS_ADD_FAIL:
-			return { ...state, loading: false, loaded: false };
+			return { ...state, sending: false, sended: false };
 		case PROCESS_ADD_REQUEST:
 			return { ...state, loading: true, loaded: false };      
 		case PROCESS_SEARCH_SUCCESS:
@@ -85,8 +89,7 @@ const reducer = (state = initialState, action) => {
 			return { ...state, editLoading: false, editLoaded: false };
 		case EDIT_PROCESS_OBS_REQUEST:
 			return { ...state, editLoading: true, editLoaded: false };	
-		case CLEAN_ADDED_PROCESS:
-			return { ...state, loading: true, loaded: false };
+		
 		default:
 			return state;
 	}

@@ -184,8 +184,8 @@ const styles = {
 
 
 const mapStateToProps = (state) => ({
-  loading: state.userprocess.loading,
-  loaded: state.userprocess.loaded,
+  loading: state.userprocess.sending,
+  loaded: state.userprocess.sended,
   diligencia: state.userprocess.diligencia,
   unidadeJudicial: state.userprocess.unidadeJudicial,
   infoLoaded: state.userprocess.infoLoaded,
