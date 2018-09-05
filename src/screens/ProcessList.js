@@ -1,12 +1,17 @@
 import React, { Component } from 'react';
-import { View, ScrollView, AsyncStorage } from 'react-native';
+import { View, ScrollView, AsyncStorage, RefreshControl } from 'react-native';
 import { List, ListItem, Text } from 'react-native-elements';
 import {processFetch} from '../actions/process';
 import Spinner from '../components/common/Spinner';
 import { connect } from 'react-redux';
 
 class ProcessList extends Component {
-  
+  constructor(props) {
+    super(props);
+    this.state = {
+      refreshing: false,
+    };
+  }
 	componentWillMount(){
 		AsyncStorage.getItem('@email:key').then((email) => {
 			AsyncStorage.getItem('@password:key').then((password) => {
@@ -17,9 +22,22 @@ class ProcessList extends Component {
 		}).catch(() => {
 				console.log('erro ao pegar o email');
 			})
-			
-		
 	}
+  _onRefresh() {
+    this.setState({refreshing: true});
+    AsyncStorage.getItem('@email:key').then((email) => {
+      AsyncStorage.getItem('@password:key').then((password) => {
+          this.props.processFetch(email, password, this.props.navigation.state.params.typeToFetch);   
+      }).catch(() => {
+        console.log('erro ao pegar a senha');
+      })
+    }).catch(() => {
+        console.log('erro ao pegar o email');
+      })
+  
+    console.log(this.state.refreshing)
+    this.setState({refreshing: false});
+  }
 	renderItems(){
       if( this.props.loading ){
         return(
@@ -64,7 +82,12 @@ class ProcessList extends Component {
   }
   render(){
     return(
-        <ScrollView style={{flex: 1}}>
+        <ScrollView style={{flex: 1}} refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this._onRefresh.bind(this)}
+            />
+          }>
 	            <List
 	              containerStyle={{
 	                marginBottom: 0,
