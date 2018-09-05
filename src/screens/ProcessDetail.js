@@ -30,6 +30,9 @@ class ProcessDetail extends Component {
 	        		<Text style={styles.itemLabel}>Classe de Diligência: </Text><Text>{classe_diligencia}</Text>
 	        	</View>
 	        	<View style={styles.row}>
+	        		<Text style={styles.itemLabel}>Status: </Text><Text>{status}</Text>
+	        	</View>
+	        	<View style={styles.row}>
 	        		<Text style={styles.itemLabel}>Observação: </Text><Text>{observacao}</Text>
 	        	</View>
 	        	<View style={styles.row}>
