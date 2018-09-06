@@ -281,7 +281,7 @@ class SignupForm extends Component {
                 console.log('setando id...: ', this.props.user_id);
                 AsyncStorage.setItem('@user_id:key', this.props.user_id+'').then(() => {
                   console.log('navegando..');
-                  this.props.navigation.navigate('Home');
+                  this.props.navigation.navigate('Navigator');
                   console.log('deveria navegar');  
                 }).catch((error) => {
                   console.log('erro ao setar o id: ', error);

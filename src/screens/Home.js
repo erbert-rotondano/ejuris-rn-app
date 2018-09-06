@@ -4,6 +4,7 @@ import { List, ListItem, Text, Button, FormLabel, FormInput, FormValidationMessa
 import {APP_COLOR, user_data, DEVICE_WIDTH} from '../config/constants';
 import {processFetch} from '../actions/process';
 import { connect } from 'react-redux';
+import {Navigation} from '../config/routes';
 
 class Home extends Component {
 	componentWillMount(){
@@ -16,23 +17,45 @@ class Home extends Component {
 		
 		// this._getCurrentRouteName();
 	}
+	
 	componentDidMount(){
-		BackHandler.addEventListener('hardwareBackPress', () => {
-			if (this.props.navigation.state.routeName === 'Home') {
-			    // this.goBack();
-			    return true;
-			  } else {
-			  	return false;	
-			  }
-			  
-			console.log(this.props.navigation.state.routeName);
-		});
-	}
-	handleEvent(props) {
-		  // this.onMainScreen and this.goBack are just examples, you need to use your own implementation here
-		  // Typically you would use the navigator here to go to the last state.
+		// BackHandler.addEventListener('hardwareBackPress', this.handleEvent);
+		const handler = () => {
+			console.log('toggling');
+			return true;
+		}
+		this.props.navigation.addListener('willFocus' , () => BackHandler.addEventListener('hardwareBackPress', handler));
+		this.props.navigation.addListener('willBlur' , () => BackHandler.removeEventListener('hardwareBackPress', handler));
+		
+		// const prevGetStateForAction = Navigation.router.getStateForAction;
 
-	  
+		// 	Navigation.router.getStateForAction = (action, state) => {
+		// 	  // Do not allow to go back from Home
+		// 	  if (action.type === 'Navigation/BACK' && state && state.routes[state.index].routeName === 'Home') {
+		// 	    return null;
+		// 	  }
+
+		// 	  // Do not allow to go back to Login
+		// 	  if (action.type === 'Navigation/BACK' && state) {
+		// 	    const newRoutes = state.routes.filter(r => r.routeName !== 'Login');
+		// 	    const newIndex = newRoutes.length - 1;
+		// 	    return prevGetStateForAction(action, { index: newIndex, routes: newRoutes });
+		// 	  }
+		// 	  return prevGetStateForAction(action, state);
+		// 	};
+	}
+	// const turnOnHardwareButton = (handler) => {
+	// 	BackHandler.addEventListener('hardwareBackPress', handler);
+	// };
+	// const turnOffHardwareButton = (handler) => {
+	// 	BackHandler.removeEventListener('hardwareBackPress', handler);
+	// };
+	// const handleOnEvent = () => {
+	// 	return true;
+	// };
+	handleNavigate(route, params){
+		// BackHandler.removeEventListener('hardwareBackPress', this.handleEvent);
+		this.props.navigation.navigate(route, params);
 	}
 	
 	_getCurrentRouteName() {
@@ -58,12 +81,12 @@ class Home extends Component {
 		    		  <Button style={styles.button}
 						  raised
 						  backgroundColor={APP_COLOR}
-						  onPress={() => this.props.navigation.navigate('ProcessList', {typeToFetch: 'pendente'})}
+						  onPress={() => this.handleNavigate('ProcessList', {typeToFetch: 'pendente'})}
 						  title='Em Aberto' />
 					  <Button style={styles.button}
 						  raised
 						  backgroundColor={APP_COLOR}
-						  onPress={() => this.props.navigation.navigate('ProcessList', {typeToFetch: 'concluido'})}
+						  onPress={() => this.handleNavigate('ProcessList', {typeToFetch: 'concluido'})}
 						  title='Concluídos' />
 				 </View>
 			 </View>
@@ -85,7 +108,7 @@ class Home extends Component {
 				        <Button style={{flex: 1}}
 							  raised
 							  backgroundColor={APP_COLOR}
-							  onPress={() => this.props.navigation.navigate('SearchResult', {searchterm: this.state.searchterm})}
+							  onPress={() => this.handleNavigate('SearchResult', {searchterm: this.state.searchterm})}
 							  title='Buscar' />
 					</View>
 			 	</View>
@@ -94,7 +117,7 @@ class Home extends Component {
 	  			<Button
 				  raised
 				  backgroundColor={APP_COLOR}
-				  onPress={() => this.props.navigation.navigate('AddProcess')}
+				  onPress={() => this.handleNavigate('AddProcess')}
 				  title='Novo Atendimento' />
 			 </View>
 

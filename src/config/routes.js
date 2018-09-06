@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import { Icon } from 'react-native-elements';
 import Home from '../screens/Home'
 import TestScreen from '../screens/TestScreen';
@@ -41,13 +41,14 @@ const options = (navigation) => {
     </TouchableOpacity>
   )
 }
-export const Navigator = new StackNavigator({
+export const GeneralStack = new StackNavigator({
   Home: { 
   	screen: Home,
   	navigationOptions: ({ navigation }) => ({
       drawerLabel: 'Home',
       title: 'Balcão Virtual',
       gesturesEnabled: false,
+      backBehavior: 'none',
       headerStyle: {
         backgroundColor: 'rgba(54,57,62,1)',
       },
@@ -56,31 +57,7 @@ export const Navigator = new StackNavigator({
       // },
       headerTintColor: '#fff',
       headerLeft: null,
-      headerRight: options(navigation)
-    })
-  },
-  TestScreen: { 
-  	screen: TestScreen ,
-  	navigationOptions: ({ navigation }) => ({
-      drawerLabel: 'TestScreen',
-      title: 'Segunda Tela',
-      headerStyle: {
-        backgroundColor: 'rgba(54,57,62,1)',
-      },
-      headerTintColor: '#fff',
-      // headerLeft: back(navigation)
-    })
-  },
-  Login: { 
-  	screen: Login ,
-  	navigationOptions: ({ navigation }) => ({
-      drawerLabel: 'Login',
-      title: 'Login',
-      headerStyle: {
-        backgroundColor: 'rgba(54,57,62,1)',
-      },
-      headerTintColor: '#fff',
-      // headerLeft: back(navigation)
+      headerRight: options(navigation),
     })
   },
   ProcessDetail: { 
@@ -132,18 +109,6 @@ export const Navigator = new StackNavigator({
       },
       headerTintColor: '#fff',
       headerRight: options(navigation),
-      // headerLeft: back(navigation)
-    })
-  },
-  SignUp: { 
-    screen: Signup ,
-    navigationOptions: ({ navigation }) => ({
-      drawerLabel: 'Signup',
-      title: 'Cadastrar-se',
-      headerStyle: {
-        backgroundColor: 'rgba(54,57,62,1)',
-      },
-      headerTintColor: '#fff',
       // headerLeft: back(navigation)
     })
   },
@@ -208,13 +173,48 @@ export const Navigator = new StackNavigator({
     })
   },
 },{
+  initialRouteName: 'Home',
+});
+export const LoginStack = new StackNavigator({
+  Login: { 
+    screen: Login ,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'Login',
+      title: 'Login',
+      headerStyle: {
+        backgroundColor: 'rgba(54,57,62,1)',
+      },
+      headerTintColor: '#fff',
+      // headerLeft: back(navigation)
+    })
+  },
+  SignUp: { 
+    screen: Signup ,
+    navigationOptions: ({ navigation }) => ({
+      drawerLabel: 'Signup',
+      title: 'Cadastrar-se',
+      headerStyle: {
+        backgroundColor: 'rgba(54,57,62,1)',
+      },
+      headerTintColor: '#fff',
+      // headerLeft: back(navigation)
+    })
+  },
+},{
   initialRouteName: 'Login',
+});
+const Navigation = StackNavigator({
+  Login: {screen: LoginStack},
+  Home: {screen: GeneralStack},
+},{
+  headerMode: 'none',
+  title: 'Main',
 })
 
 class Nav extends Component {
   render() {
     return (
-      <Navigator />
+        <Navigation />
     )
   }
 }
